@@ -8,20 +8,19 @@ public class DSM {
     BroadcastAgent broadcastAgent;
 
     public DSM(){
+        localMemory = new LocalMemory();
+        broadcastAgent = new BroadcastAgent();
     }
 
-
+    // returns value of x read from local memory
     public int load(String x){
-        return 0;
+        return localMemory.load(x);
     }
 
-    public void store(String x, Integer v){
+    public void store(String x, int v){
         // TODO: write v into x in local memory
+        localMemory.store(x,v);
         // TODO: broadcast a message to all other DSMs to apply the write locally in their replicas
-//        if(mainMemory.contains(x)){
-//            mainMemory.replace(x,v);
-//        }else{
-//            mainMemory.put(x,v);
-//        }
+        //broadcastAgent.broadcast();
     }
 }
