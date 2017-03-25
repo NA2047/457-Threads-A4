@@ -5,16 +5,16 @@ public class Main {
 
     public static void main(String[] args){
         DSM dsm = new DSM();
-        Processor pro1 = new Processor(dsm,0);
-        Processor pro2 = new Processor(dsm,0);
-        Processor pro3 = new Processor(dsm,0);
-        Processor pro4 = new Processor(dsm,0);
-        Processor pro5 = new Processor(dsm,0);
-        Processor pro6 = new Processor(dsm,0);
-        Processor pro7 = new Processor(dsm,0);
-        Processor pro8 = new Processor(dsm,0);
-        Processor pro9 = new Processor(dsm,0);
-        Processor pro10 = new Processor(dsm,0);
+        Processor pro1 = new Processor(dsm,1);
+        Processor pro2 = new Processor(dsm,2);
+        Processor pro3 = new Processor(dsm,3);
+        Processor pro4 = new Processor(dsm,4);
+        Processor pro5 = new Processor(dsm,5);
+        Processor pro6 = new Processor(dsm,6);
+        Processor pro7 = new Processor(dsm,7);
+        Processor pro8 = new Processor(dsm,8);
+        Processor pro9 = new Processor(dsm,9);
+        Processor pro10 = new Processor(dsm,10);
 
 
 
