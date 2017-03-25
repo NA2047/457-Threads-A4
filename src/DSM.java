@@ -7,9 +7,9 @@ public class DSM {
     LocalMemory localMemory;
     BroadcastAgent broadcastAgent;
 
-    public DSM(){
+    public DSM(BroadcastSystem broadcastSystem){
         localMemory = new LocalMemory();
-        broadcastAgent = new BroadcastAgent();
+        broadcastAgent = new BroadcastAgent(broadcastSystem, this);
     }
 
     // returns value of x read from local memory

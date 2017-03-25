@@ -7,10 +7,10 @@ public class Processor extends Thread {
     Integer multiplicant1;
     Integer multiplicant2;
 
-    public Processor(int processID){
+    public Processor(int processID, BroadcastSystem broadcastSystem){
         //process number
         this.processID = processID;
-        dsm = new DSM();
+        dsm = new DSM(broadcastSystem);
     }
 
     public void run(){

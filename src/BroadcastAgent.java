@@ -9,6 +9,13 @@
  * Each BroadcastAgent executes in a separate thread.
  */
 public class BroadcastAgent {
+    BroadcastSystem broadcastSystem;
+    DSM dsm;
+
+    public BroadcastAgent(BroadcastSystem broadcastSystem, DSM dsm){
+        this.broadcastSystem = broadcastSystem;
+        this.dsm = dsm;
+    }
 
     /**
      * This method sends a store.
@@ -17,13 +24,13 @@ public class BroadcastAgent {
      * @param v The value to store.
      * */
     public void broadcast(String x, int v){
-
+        broadcastSystem.broadcast(x,v);
     }
 
     /**
      * This method receives a store.
      * */
-    public void receive(){
-
+    public void receive(String x, int v){
+        dsm.store(x,v);
     }
 }
