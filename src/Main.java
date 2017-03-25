@@ -4,6 +4,9 @@
 public class Main {
 
     public static void main(String[] args){
+        BroadcastSystem broadcastSystem = new BroadcastSystem();
+        // TODO: this broadcastSystem needs to be accessible by each broadcastAgent
+
         Processor pro0 = new Processor(0);
         Processor pro1 = new Processor(1);
         Processor pro2 = new Processor(2);
