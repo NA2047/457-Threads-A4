@@ -13,10 +13,11 @@ public class BroadcastAgent {
     /**
      * This method sends a store.
      *
-     * @param message The message to send
+     * @param x The item to store.
+     * @param v The value to store.
      * */
-    public void broadcast(String message){
-
+    public void broadcast(String x, int v){
+        
     }
 
     /**

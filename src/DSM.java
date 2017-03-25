@@ -18,9 +18,9 @@ public class DSM {
     }
 
     public void store(String x, int v){
-        // TODO: write v into x in local memory
+        // write v into x in local memory
         localMemory.store(x,v);
-        // TODO: broadcast a message to all other DSMs to apply the write locally in their replicas
-        //broadcastAgent.broadcast();
+        // broadcast a message to all other DSMs to apply the write locally in their replicas
+        broadcastAgent.broadcast(x,v);
     }
 }

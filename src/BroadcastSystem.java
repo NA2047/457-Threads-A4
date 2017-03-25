@@ -11,4 +11,5 @@
  */
 public class BroadcastSystem {
     // TODO: implement some delays to simulate sending/receiving messages.
+    // for each process, store the message
 }
