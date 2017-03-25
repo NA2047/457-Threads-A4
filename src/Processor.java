@@ -3,29 +3,22 @@
  */
 public class Processor extends Thread {
     DSM dsm;
-    Integer turn;
-    String flag;
-    Integer processNum;
+    int processID;
     Integer multiplicant1;
     Integer multiplicant2;
 
-    public Processor(DSM dsm, int process){
+    public Processor(int processID){
         //process number
-        this.processNum = process;
-        // local copy of dsm
-        this.dsm = dsm;
+        this.processID = processID;
+        dsm = new DSM();
     }
-
 
     public void run(){
         // setups processes and calls pertersons algo
         // need to set up agents
-
-
-
     }
 
-    public int pertersonN(){
+    public int petersonsN(){
         //<Entry Section>
 
         //<Critical Section>
