@@ -31,6 +31,8 @@ public class BroadcastAgent {
      * This method receives a store.
      * */
     public void receive(String x, int v){
-        dsm.store(x,v);
+        if (dsm.load(x) != v){
+            dsm.store(x,v);
+        }
     }
 }
