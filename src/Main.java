@@ -4,17 +4,17 @@
 public class Main {
 
     public static void main(String[] args){
-        MainMemory mainMemory = new MainMemory();
-        Processes pro1 = new Processes(mainMemory,0);
-        Processes pro2 = new Processes(mainMemory,0);
-        Processes pro3 = new Processes(mainMemory,0);
-        Processes pro4 = new Processes(mainMemory,0);
-        Processes pro5 = new Processes(mainMemory,0);
-        Processes pro6 = new Processes(mainMemory,0);
-        Processes pro7 = new Processes(mainMemory,0);
-        Processes pro8 = new Processes(mainMemory,0);
-        Processes pro9 = new Processes(mainMemory,0);
-        Processes pro10 = new Processes(mainMemory,0);
+        DSM dsm = new DSM();
+        Processor pro1 = new Processor(dsm,0);
+        Processor pro2 = new Processor(dsm,0);
+        Processor pro3 = new Processor(dsm,0);
+        Processor pro4 = new Processor(dsm,0);
+        Processor pro5 = new Processor(dsm,0);
+        Processor pro6 = new Processor(dsm,0);
+        Processor pro7 = new Processor(dsm,0);
+        Processor pro8 = new Processor(dsm,0);
+        Processor pro9 = new Processor(dsm,0);
+        Processor pro10 = new Processor(dsm,0);
 
 
 
