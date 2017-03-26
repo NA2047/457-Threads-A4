@@ -39,21 +39,20 @@ public class Processor extends Thread {
             }
 
             //the while loop from petersons algo
-            while((ThereExists(k)) && (dsm.load("turn"+k) == 1));
-
+            while((ThereExists(k)) && (dsm.load("turn"+k) == processID));
         }
 
         //<Critical Section>
         System.out.println("Process "+ processID+" is in the CS");
+        System.out.println("   Increment test value by processor "+ processID +"  =  "+(++test));
 
-
-            try {
-                System.out.println("   Increment test value by processor "+ processID +"  =  "+(++test));
-                Thread.sleep(50);
-
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-            }
+//            try {
+//                System.out.println("   Increment test value by processor "+ processID +"  =  "+(++test));
+//                Thread.sleep(50);
+//
+//            } catch (InterruptedException e1) {
+//                e1.printStackTrace();
+//            }
         System.out.println("Process "+ processID+" is leaving the CS");
         //<Critical Section>
 
@@ -66,12 +65,12 @@ public class Processor extends Thread {
 
     }
 
-    private Boolean ThereExists(int turn){
+    private Boolean ThereExists(int k){
         Boolean thereExists;
         thereExists = false;
         for(int j=0; j<10; j++){
             if(j != this.processID){
-                if(dsm.load("flag"+j) >= turn){
+                if(dsm.load("flag"+j) >= k){
                     thereExists = true;
                     return thereExists;
                 }

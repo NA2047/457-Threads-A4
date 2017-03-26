@@ -9,12 +9,26 @@
  * One BroadcastSystem object is shared between all BroadcastAgents.
  * Executes in a separate thread.
  */
-public class BroadcastSystem {
+public class BroadcastSystem extends Thread {
     private BroadcastAgent [] agentArray;
+    boolean broadcast;
+    String x;
+    int v;
     // TODO: implement some delays to simulate sending/receiving messages.
 
+
+    @Override
+    public void run() {
+        while (!interrupted()){
+            if (broadcast){
+                broadcast(x,v);
+                broadcast = false;
+            }
+        }
+    }
+
     // for each process, store the message
-    public void broadcast(String x, int v){
+    public void broadcast(String x, int v) {
         for (BroadcastAgent agent : agentArray){
             agent.receive(x,v);
         }

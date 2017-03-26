@@ -24,7 +24,10 @@ public class BroadcastAgent {
      * @param v The value to send.
      * */
     public void broadcast(String x, int v) throws InterruptedException{
-        broadcastSystem.broadcast(x,v);
+//        broadcastSystem.broadcast(x,v);
+        broadcastSystem.x = x;
+        broadcastSystem.v = v;
+        broadcastSystem.broadcast = true;
     }
 
     /**
