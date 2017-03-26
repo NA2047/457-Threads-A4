@@ -54,11 +54,11 @@ public class Main {
         // run the processors
         for (Processor p : processors){
             p.start();
-//            p.dsm.store("turn", p.processID);
-//            for (Processor pr : processors){
-//                System.out.print("pro" + pr.processID + " --- ");
-//                System.out.println(pr.dsm.load(turn));
-//            }
+            p.dsm.store("turn", p.processID);
+            for (Processor pr : processors){
+                System.out.print("pro" + pr.processID + " --- ");
+                System.out.println(pr.dsm.load(turn));
+            }
         }
     }
 }

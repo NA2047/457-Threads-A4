@@ -4,8 +4,7 @@
 public class Processor extends Thread {
     DSM dsm;
     int processID;
-    Integer multiplicant1;
-    Integer multiplicant2;
+
 
     public Processor(int processID, BroadcastSystem broadcastSystem){
         //process number
@@ -16,31 +15,44 @@ public class Processor extends Thread {
     public void run(){
         // setups processes and calls pertersons algo
         // need to set up agents
+
+        while (!interrupted()){
+            petersonsN();
+        }
+
+
     }
 
-    public int petersonsN(){
+    public void petersonsN(){
         //<Entry Section>
+        for(int i =0; i < 9; i++){
+            dsm.store("flag"+this.processID,i);
+            dsm.store("turn"+i,this.processID);
+            for (int j =0; j<10;j++){
+
+                while ((i!=j)&& ((set)))
+            }
+
+
+        }
+
+
 
         //<Critical Section>
-        int c = criticalSection(multiplicant1, multiplicant2);
+        System.out.println(processor);
 
 
 
         //<Exit Section>
 
 
-        return c;
         //<Remainder Section>
 
     }
 
     //Critical section. takes 2  Integers and returns their multiplication.
-    public int criticalSection(int x, int y) {
-
-
-        multiplicant1 = x;
-        multiplicant2 = y;
-        return (multiplicant1 * multiplicant2);
+    public void setFlag(int flag){
+        
     }
 
 

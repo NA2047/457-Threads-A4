@@ -18,6 +18,7 @@ public class DSM {
     }
 
     public void store(String x, int v){
+
         // write v into x in local memory
         localMemory.store(x,v);
         // broadcast a message to all other DSMs to apply the write locally in their replicas
