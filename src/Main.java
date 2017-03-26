@@ -4,6 +4,8 @@
 public class Main {
 
     public static void main(String[] args){
+        String turn = "turn";
+        String flag = "flag";
         BroadcastSystem broadcastSystem = new BroadcastSystem();
         // this broadcastSystem needs to be accessible by each broadcastAgent
 
@@ -18,6 +20,19 @@ public class Main {
         Processor pro7 = new Processor(7, broadcastSystem);
         Processor pro8 = new Processor(8, broadcastSystem);
         Processor pro9 = new Processor(9, broadcastSystem);
+
+        Processor [] processors = {
+                pro0,
+                pro1,
+                pro2,
+                pro3,
+                pro4,
+                pro5,
+                pro6,
+                pro7,
+                pro8,
+                pro9
+        };
 
         // The array of all broadcast agents to set in the broadcast system
         BroadcastAgent [] broadcastAgents = {
@@ -37,15 +52,13 @@ public class Main {
         broadcastSystem.setAgents(broadcastAgents);
 
         // run the processors
-        pro0.start();
-        pro1.start();
-        pro2.start();
-        pro3.start();
-        pro4.start();
-        pro5.start();
-        pro6.start();
-        pro7.start();
-        pro8.start();
-        pro9.start();
+        for (Processor p : processors){
+            p.start();
+//            p.dsm.store("turn", p.processID);
+//            for (Processor pr : processors){
+//                System.out.print("pro" + pr.processID + " --- ");
+//                System.out.println(pr.dsm.load(turn));
+//            }
+        }
     }
 }
