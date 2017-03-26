@@ -2,6 +2,8 @@
  * Created by Sharon on 3/24/2017.
  */
 
+import java.util.concurrent.BlockingQueue;
+
 /**
  * This class provides the implementation of the broadcast
  * mechanism needed by DSM.
@@ -9,6 +11,7 @@
  * Each BroadcastAgent executes in a separate thread.
  */
 public class BroadcastAgent {
+    private BlockingQueue<String[]> bcQ;
     BroadcastSystem broadcastSystem;
     DSM dsm;
 

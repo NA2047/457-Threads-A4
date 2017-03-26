@@ -1,3 +1,5 @@
+import org.omg.CORBA.INTERNAL;
+
 /**
  * Created by Kleen star on 2017-03-22.
  */
@@ -32,7 +34,7 @@ public class Processor extends Thread {
             dsm.store("turn"+k,this.processID);
             for (int i =0;i<10;i++){
 
-                while ((i!=k)&& ((setFlag())))
+                while ((i!=k)&& ((setFlag(i)>= k) && ))
             }
 
 
@@ -53,7 +55,7 @@ public class Processor extends Thread {
     }
 
     //Critical section. takes 2  Integers and returns their multiplication.
-    public void setFlag(int flag){
+    public Integer setFlag(int flag){
 
         try {
             flag =
@@ -62,7 +64,28 @@ public class Processor extends Thread {
 
     }
 
-    setTurn
+    public Integer setTurn(int turn){
+        try {
+
+        }
+
+    }
+
+
+    public void criticalSection(int processer) {
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+
+        }
+        System.out.println();
+
+
+    }
+
+
 
 
 

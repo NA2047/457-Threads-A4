@@ -7,6 +7,7 @@ public class Main {
         String turn = "turn";
         String flag = "flag";
         BroadcastSystem broadcastSystem = new BroadcastSystem();
+        TokenRing tokenRing = new TokenRing();
         // this broadcastSystem needs to be accessible by each broadcastAgent
 
         // create all of the processors
@@ -47,6 +48,8 @@ public class Main {
             pro8.dsm.broadcastAgent,
             pro9.dsm.broadcastAgent
         };
+
+        Arr
 
         // set all of the agents in the broadcast system
         broadcastSystem.setAgents(broadcastAgents);
