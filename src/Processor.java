@@ -12,49 +12,75 @@ public class Processor extends Thread {
         dsm = new DSM(broadcastSystem);
     }
 
-    public void run(){
-        // setups processes and calls pertersons algo
-        // need to set up agents
+    public void run() {
 
-        while (!interrupted()){
+
+        while (!interrupted()) {
             petersonsN();
         }
-
-
     }
 
-    public void petersonsN(){
-        //<Entry Section>
-        for(int i =0; i < 9; i++){
-            dsm.store("flag"+this.processID,i);
-            dsm.store("turn"+i,this.processID);
-            for (int j =0; j<10;j++){
 
-                while ((i!=j)&& ((set)))
+    public void petersonsN(){
+
+        //<Entry Section>
+        for(int k=0; k<8; k++){
+            try { // processor that is competing at level k
+                dsm.store("flag"+processID, k);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {//tells the current level that its ProcessorIDs turn
+                dsm.store("turn"+k, processID);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
+            //the while loop from petersons algo
+            while((ThereExists(k)) && (dsm.load("turn"+k) == 1));
 
         }
 
-
-
         //<Critical Section>
-        System.out.println(processor);
+        System.out.println("Process "+ processID+" is in the CS");
 
-
+//            try {
+//                Thread.sleep();
+//            } catch (InterruptedException e1) {
+//                e1.printStackTrace();
+//            }
+        System.out.println("Process "+ processID+" is leaving the CS");
+        //<Critical Section>
 
         //<Exit Section>
-
-
-        //<Remainder Section>
+            try {
+                dsm.store("flag"+processID, -1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
     }
 
-    //Critical section. takes 2  Integers and returns their multiplication.
-    public void setFlag(int flag){
-        
+    private Boolean ThereExists(int turn){
+        Boolean thereExists;
+        thereExists = false;
+        for(int j=0; j<10; j++){
+            if(j != this.processID){
+                if(dsm.load("flag"+j) >= turn){
+                    thereExists = true;
+                    return thereExists;
+                }
+            }
+        }
+        return false;
     }
-
 
 
 }
+
+
+
+
+
+
+
