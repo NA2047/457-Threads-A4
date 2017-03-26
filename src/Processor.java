@@ -47,10 +47,10 @@ public class Processor extends Thread {
         System.out.println("Process "+ processID+" is in the CS");
 
 
-        System.out.println("   Increment test value by processor "+ processID + "  =  "+(++test));
-
             try {
+                System.out.println("   Increment test value by processor "+ processID +"  =  "+(++test));
                 Thread.sleep(50);
+
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
             }
