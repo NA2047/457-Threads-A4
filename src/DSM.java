@@ -4,12 +4,16 @@
  * DSM executes in a separate thread.
  */
 public class DSM {
-    LocalMemory localMemory;
-    BroadcastAgent broadcastAgent;
+    private LocalMemory localMemory;
+    private BroadcastAgent broadcastAgent;
+    private Processor ourProcessor;
 
-    public DSM(BroadcastSystem broadcastSystem){
+
+    public DSM(BroadcastSystem broadcastSystem,Processor ourProcessor){
+
         localMemory = new LocalMemory();
-        broadcastAgent = new BroadcastAgent(broadcastSystem, this);
+        broadcastAgent = new BroadcastAgent(broadcastSystem, localMemory);
+        this.ourProcessor = ourProcessor;
     }
 
     // returns value of x read from local memory

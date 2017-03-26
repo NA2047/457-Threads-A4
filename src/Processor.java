@@ -39,7 +39,7 @@ public class Processor extends Thread {
             }
 
             //the while loop from petersons algo
-            while((ThereExists(k)) && (dsm.load("turn"+k) == 1));
+            while((ThereExists(k)) && (dsm.load("turn"+k) == processID));
 
         }
 
@@ -49,7 +49,7 @@ public class Processor extends Thread {
 
             try {
                 System.out.println("   Increment test value by processor "+ processID +"  =  "+(++test));
-                Thread.sleep(50);
+                Thread.sleep(10);
 
             } catch (InterruptedException e1) {
                 e1.printStackTrace();

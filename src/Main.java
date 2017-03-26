@@ -33,23 +33,24 @@ public class Main {
             pro8,
             pro9
         };
+        broadcastSystem.start();
 
         // The array of all broadcast agents to set in the broadcast system
-        BroadcastAgent [] broadcastAgents = {
-            pro0.dsm.broadcastAgent,
-            pro1.dsm.broadcastAgent,
-            pro2.dsm.broadcastAgent,
-            pro3.dsm.broadcastAgent,
-            pro4.dsm.broadcastAgent,
-            pro5.dsm.broadcastAgent,
-            pro6.dsm.broadcastAgent,
-            pro7.dsm.broadcastAgent,
-            pro8.dsm.broadcastAgent,
-            pro9.dsm.broadcastAgent
-        };
+//        BroadcastAgent [] broadcastAgents = {
+//            pro0.dsm.broadcastAgent,
+//            pro1.dsm.broadcastAgent,
+//            pro2.dsm.broadcastAgent,
+//            pro3.dsm.broadcastAgent,
+//            pro4.dsm.broadcastAgent,
+//            pro5.dsm.broadcastAgent,
+//            pro6.dsm.broadcastAgent,
+//            pro7.dsm.broadcastAgent,
+//            pro8.dsm.broadcastAgent,
+//            pro9.dsm.broadcastAgent
+//        };
 
         // set all of the agents in the broadcast system
-        broadcastSystem.setAgents(broadcastAgents);
+//        broadcastSystem.setAgents(broadcastAgents);
 
         // run the processors
         for (Processor p : processors){

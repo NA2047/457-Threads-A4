@@ -2,6 +2,9 @@
  * Created by Sharon on 3/24/2017.
  */
 
+import java.util.HashMap;
+import java.util.concurrent.BlockingQueue;
+
 /**
  * This class provides the implementation of the broadcast
  * mechanism needed by DSM.
@@ -10,11 +13,12 @@
  */
 public class BroadcastAgent {
     BroadcastSystem broadcastSystem;
-    DSM dsm;
+     BlockingQueue<String[]> blockingQueue;
+     LocalMemory localMemory;		//the localMem
 
-    public BroadcastAgent(BroadcastSystem broadcastSystem, DSM dsm){
+    public BroadcastAgent(BroadcastSystem broadcastSystem, LocalMemory localMem){
         this.broadcastSystem = broadcastSystem;
-        this.dsm = dsm;
+        this.localMemory = localMem;
     }
 
     /**
@@ -23,8 +27,18 @@ public class BroadcastAgent {
      * @param x The item to send.
      * @param v The value to send.
      * */
+//    public void broadcast(String x, int v) throws InterruptedException{
+//        broadcastSystem.broadcast(x,v);
+//    }
+
+
     public void broadcast(String x, int v) throws InterruptedException{
-        broadcastSystem.broadcast(x,v);
+//        HashMap<String, Integer> temp = new HashMap<>();
+//        temp.put(x,v);
+        String[] tempArray = new String[2];
+        tempArray[0] = x;
+        tempArray[1] = Integer.toString(v);
+        blockingQueue.put(tempArray);
     }
 
     /**
@@ -34,15 +48,8 @@ public class BroadcastAgent {
      * @param v The value to store.
      * */
     public void receive(String x, int v){
-        if (dsm.load(x) != v){
-            try {
-                dsm.store(x,v);
-
-            }catch (InterruptedException e){
-                e.printStackTrace();
-
-            }
+        localMemory.store(x, v);
 
         }
     }
-}
+
