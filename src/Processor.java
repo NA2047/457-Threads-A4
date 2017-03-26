@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * This class represents a processor.
  * <p>
@@ -6,6 +8,7 @@
 
 public class Processor extends Thread {
     DSM dsm;
+    TokenRingAgent tra;
     int processID;
     static int test = 0;
     int N = 10;
@@ -17,9 +20,10 @@ public class Processor extends Thread {
      * @param processID       is the assigned processID.
      * @param broadcastSystem is the global instance.
      */
-    public Processor(int processID, BroadcastSystem broadcastSystem) {
+    public Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings) {
         this.processID = processID; // process number
         dsm = new DSM(broadcastSystem);
+        tra = new TokenRingAgent(tokenRings);
     }
 
     /**

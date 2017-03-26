@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Created by Sharon on 3/24/2017.
  */
@@ -7,6 +9,11 @@ public class TokenRingAgent {
     int processorID;
     int ringPredecessorID;
     int ringSuccessorID;
+    ArrayList<TokenRing> tokenRings;
+
+    public TokenRingAgent(ArrayList<TokenRing> tokenRings){
+        this.tokenRings = tokenRings;
+    }
 
     /**
      * This method returns the unique identifier for the token
