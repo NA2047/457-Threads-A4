@@ -22,15 +22,17 @@ public class Processor extends Thread {
 
 
     }
+//    flag = ;
+//    turn ends up being the late comer
 
     public void petersonsN(){
         //<Entry Section>
-        for(int i =0; i < 9; i++){
-            dsm.store("flag"+this.processID,i);
-            dsm.store("turn"+i,this.processID);
-            for (int j =0; j<10;j++){
+        for(int k =0; k < 8; k++){
+            dsm.store("flag"+this.processID,k);
+            dsm.store("turn"+k,this.processID);
+            for (int i =0;i<10;i++){
 
-                while ((i!=j)&& ((set)))
+                while ((i!=k)&& ((setFlag())))
             }
 
 
@@ -52,8 +54,15 @@ public class Processor extends Thread {
 
     //Critical section. takes 2  Integers and returns their multiplication.
     public void setFlag(int flag){
-        
+
+        try {
+            flag =
+        }
+
+
     }
+
+    setTurn
 
 
 
