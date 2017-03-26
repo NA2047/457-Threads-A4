@@ -11,8 +11,10 @@ public class TokenRingAgent {
     int ringSuccessorID;
     ArrayList<TokenRing> tokenRings;
 
-    public TokenRingAgent(ArrayList<TokenRing> tokenRings){
+    public TokenRingAgent(ArrayList<TokenRing> tokenRings,int processorID  ){
         this.tokenRings = tokenRings;
+        this.processorID = processorID;
+        Active = false;
     }
 
     /**
@@ -22,7 +24,9 @@ public class TokenRingAgent {
      * @return the ID for the token received.
      * */
     public int receiveToken(){
-        return 0;
+        tokenRings.get(0).agentArray.(tokenID);
+
+        return 1;
     }
 
     /**
@@ -33,4 +37,20 @@ public class TokenRingAgent {
     public void sendToken(Token t){
 
     }
+
+
+    public void setPred(int predID){
+
+    }
+
+    public void setSucd(int sucID){
+
+    }
+
+    public int getProcID(){
+        return this.processorID;
+    }
+
+
+}
 }
