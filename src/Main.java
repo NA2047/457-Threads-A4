@@ -6,6 +6,7 @@
 public class Main {
     public static void main(String[] args) {
         BroadcastSystem broadcastSystem = new BroadcastSystem();
+        broadcastSystem.start();
 
         // create all of the processors
         Processor pro0 = new Processor(0, broadcastSystem);
