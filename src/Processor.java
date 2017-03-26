@@ -5,6 +5,7 @@ public class Processor extends Thread {
     DSM dsm;
     int processID;
     static int test = 1;
+    int N = 10;
 
 
     public Processor(int processID, BroadcastSystem broadcastSystem){
@@ -25,7 +26,7 @@ public class Processor extends Thread {
     public void petersonsN(){
 
         //<Entry Section>
-        for(int k=0; k<8; k++){
+        for(int k=0; k<N-2; k++){
             try { // processor that is competing at level k
                 dsm.store("flag"+processID, k);
             } catch (InterruptedException e) {
@@ -46,7 +47,7 @@ public class Processor extends Thread {
         System.out.println("Process "+ processID+" is in the CS");
 
 
-        System.out.println("   Increment test value by processor "+ processID "  =  "+(++test));
+        System.out.println("   Increment test value by processor "+ processID + "  =  "+(++test));
 
             try {
                 Thread.sleep(50);
