@@ -7,7 +7,6 @@ public class Processor extends Thread {
     static int test = 1;
     int N = 10;
 
-
     public Processor(int processID, BroadcastSystem broadcastSystem){
         //process number
         this.processID = processID;
@@ -15,16 +14,10 @@ public class Processor extends Thread {
     }
 
     public void run() {
-
-
-        while (!interrupted()) {
-            petersonsN();
-        }
+        petersonsN();
     }
 
-
     public void petersonsN(){
-
         //<Entry Section>
         for(int k=0; k<N-2; k++){
             try { // processor that is competing at level k
@@ -46,23 +39,22 @@ public class Processor extends Thread {
         System.out.println("Process "+ processID+" is in the CS");
         System.out.println("   Increment test value by processor "+ processID +"  =  "+(++test));
 
-//            try {
-//                System.out.println("   Increment test value by processor "+ processID +"  =  "+(++test));
-//                Thread.sleep(50);
-//
-//            } catch (InterruptedException e1) {
-//                e1.printStackTrace();
-//            }
+            try {
+                System.out.println("   Increment test value by processor "+ processID +"  =  "+(++test));
+                Thread.sleep(50);
+
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
         System.out.println("Process "+ processID+" is leaving the CS");
         //<Critical Section>
 
         //<Exit Section>
-            try {
-                dsm.store("flag"+processID, -1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+        try {
+            dsm.store("flag"+processID, -1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private Boolean ThereExists(int k){
@@ -78,8 +70,6 @@ public class Processor extends Thread {
         }
         return false;
     }
-
-
 }
 
 
