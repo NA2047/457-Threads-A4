@@ -11,6 +11,7 @@ public class Main {
         broadcastSystem.start();
         int numberOfProcessors = 10;
         int numberOfTokenRings = 1;
+        boolean enableTokenRing = false;
 
         ArrayList<Processor> processors = new ArrayList<>();
         ArrayList<BroadcastAgent> broadcastAgents = new ArrayList<>();
@@ -19,7 +20,7 @@ public class Main {
 
         // create token rings
         for (int i = 0; i < numberOfTokenRings; i++){
-            tokenRings.add(new TokenRing());
+            tokenRings.add(new TokenRing(i));
         }
 
         // create all of the processors
@@ -34,7 +35,14 @@ public class Main {
 
         // set all of the agents in each token ring
         for (TokenRing tr : tokenRings){
-            tr.setAgents(tokenRingAgents);
+            if (enableTokenRing){
+                tr.setAgents(tokenRingAgents);
+                tr.start();
+            }
+            else {
+                tr.disable();
+            }
+
         }
 
         // start each thread
