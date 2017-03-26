@@ -1,13 +1,11 @@
 /**
- * Created by Kleen star on 2017-03-22.
+ * This is the Main class where the processors are created
+ * and the BroadcastSystem is created.
  */
-public class Main {
 
-    public static void main(String[] args){
-        String turn = "turn";
-        String flag = "flag";
+public class Main {
+    public static void main(String[] args) {
         BroadcastSystem broadcastSystem = new BroadcastSystem();
-        // this broadcastSystem needs to be accessible by each broadcastAgent
 
         // create all of the processors
         Processor pro0 = new Processor(0, broadcastSystem);
@@ -21,44 +19,29 @@ public class Main {
         Processor pro8 = new Processor(8, broadcastSystem);
         Processor pro9 = new Processor(9, broadcastSystem);
 
-        Processor [] processors = {
-            pro0,
-            pro1,
-            pro2,
-            pro3,
-            pro4,
-            pro5,
-            pro6,
-            pro7,
-            pro8,
-            pro9
-        };
+        // The array of all of the processors
+        Processor[] processors = {pro0, pro1, pro2, pro3, pro4, pro5, pro6, pro7, pro8, pro9};
 
         // The array of all broadcast agents to set in the broadcast system
-        BroadcastAgent [] broadcastAgents = {
-            pro0.dsm.broadcastAgent,
-            pro1.dsm.broadcastAgent,
-            pro2.dsm.broadcastAgent,
-            pro3.dsm.broadcastAgent,
-            pro4.dsm.broadcastAgent,
-            pro5.dsm.broadcastAgent,
-            pro6.dsm.broadcastAgent,
-            pro7.dsm.broadcastAgent,
-            pro8.dsm.broadcastAgent,
-            pro9.dsm.broadcastAgent
+        BroadcastAgent[] broadcastAgents = {
+                pro0.dsm.broadcastAgent,
+                pro1.dsm.broadcastAgent,
+                pro2.dsm.broadcastAgent,
+                pro3.dsm.broadcastAgent,
+                pro4.dsm.broadcastAgent,
+                pro5.dsm.broadcastAgent,
+                pro6.dsm.broadcastAgent,
+                pro7.dsm.broadcastAgent,
+                pro8.dsm.broadcastAgent,
+                pro9.dsm.broadcastAgent
         };
 
         // set all of the agents in the broadcast system
         broadcastSystem.setAgents(broadcastAgents);
 
         // run the processors
-        for (Processor p : processors){
+        for (Processor p : processors) {
             p.start();
-//            p.dsm.store("turn", p.processID);
-//            for (Processor pr : processors){
-//                System.out.print("pro" + pr.processID + " --- ");
-//                System.out.println(pr.dsm.load(turn));
-            }
-//        }
+        }
     }
 }

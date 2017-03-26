@@ -1,70 +1,94 @@
 /**
- * Created by Kleen star on 2017-03-22.
+ * This class represents a processor.
+ * <p>
+ * Executes in a separate thread.
  */
+
 public class Processor extends Thread {
     DSM dsm;
     int processID;
-    static int test = 1;
+    static int test = 0;
     int N = 10;
 
-    public Processor(int processID, BroadcastSystem broadcastSystem){
-        //process number
-        this.processID = processID;
+    /**
+     * The constructor of Processor.
+     * processID and DSM are set.
+     *
+     * @param processID       is the assigned processID.
+     * @param broadcastSystem is the global instance.
+     */
+    public Processor(int processID, BroadcastSystem broadcastSystem) {
+        this.processID = processID; // process number
         dsm = new DSM(broadcastSystem);
     }
 
+    /**
+     * The overridden run method.
+     * Calls Peterson's algorithm.
+     */
+    @Override
     public void run() {
         petersonsN();
     }
 
-    public void petersonsN(){
-        //<Entry Section>
-        for(int k=0; k<N-2; k++){
+    /**
+     * This method represents Peterson's algorithm.
+     */
+    public void petersonsN() {
+        // <Entry Section>
+        for (int k = 0; k < N - 2; k++) {
             try { // processor that is competing at level k
-                dsm.store("flag"+processID, k);
+                dsm.store("flag" + processID, k);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            try {//tells the current level that its ProcessorIDs turn
-                dsm.store("turn"+k, processID);
+            try { // tells the current level that it's ProcessorIDs turn
+                dsm.store("turn" + k, processID);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            //the while loop from petersons algo
-            while((ThereExists(k)) && (dsm.load("turn"+k) == processID));
+            //the while loop from peterson's algorithm
+            while ((ThereExists(k)) && (dsm.load("turn" + k) == processID)) ;
+        }
+        // END <Entry Section>
+
+        // <Critical Section>
+        System.out.println("Process " + processID + " is in the CS");
+
+        try {
+            System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
+            Thread.sleep(50); // short delay to demonstrate that the algorithm is not perfect
+
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
         }
 
-        //<Critical Section>
-        System.out.println("Process "+ processID+" is in the CS");
-        System.out.println("   Increment test value by processor "+ processID +"  =  "+(++test));
+        System.out.println("Process " + processID + " is leaving the CS");
+        // END <Critical Section>
 
-            try {
-                System.out.println("   Increment test value by processor "+ processID +"  =  "+(++test));
-                Thread.sleep(50);
-
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-            }
-        System.out.println("Process "+ processID+" is leaving the CS");
-        //<Critical Section>
-
-        //<Exit Section>
+        // <Exit Section>
         try {
-            dsm.store("flag"+processID, -1);
+            dsm.store("flag" + processID, -1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        // END <Exit Section>
     }
 
-    private Boolean ThereExists(int k){
-        Boolean thereExists;
-        thereExists = false;
-        for(int j=0; j<10; j++){
-            if(j != this.processID){
-                if(dsm.load("flag"+j) >= k){
-                    thereExists = true;
-                    return thereExists;
+    /**
+     * This method checks if there exists a k
+     * such that flag[k] >= j, as per Peterson's
+     * Algorithm.
+     *
+     * @param k The k value to check.
+     * @return Whether or not there exists such a k.
+     */
+    private Boolean ThereExists(int k) {
+        for (int j = 0; j < 10; j++) {
+            if (j != this.processID) {
+                if (dsm.load("flag" + j) >= k) {
+                    return true;
                 }
             }
         }
