@@ -3,6 +3,9 @@
  */
 // Represents a token message
 public class Token {
-    String message;
+    int tokenID;
 
+    public Token (int tokenID){
+        this.tokenID = tokenID;
+    }
 }
