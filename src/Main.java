@@ -22,16 +22,16 @@ public class Main {
         Processor pro9 = new Processor(9, broadcastSystem);
 
         Processor [] processors = {
-                pro0,
-                pro1,
-                pro2,
-                pro3,
-                pro4,
-                pro5,
-                pro6,
-                pro7,
-                pro8,
-                pro9
+            pro0,
+            pro1,
+            pro2,
+            pro3,
+            pro4,
+            pro5,
+            pro6,
+            pro7,
+            pro8,
+            pro9
         };
 
         // The array of all broadcast agents to set in the broadcast system
@@ -54,11 +54,15 @@ public class Main {
         // run the processors
         for (Processor p : processors){
             p.start();
-            p.dsm.store("turn", p.processID);
+        }
+
+/*        // test if broadcasting properly
+        for (Processor p : processors){
+            p.dsm.store(turn+p.processID, p.processID);
             for (Processor pr : processors){
                 System.out.print("pro" + pr.processID + " --- ");
-                System.out.println(pr.dsm.load(turn));
+                System.out.println(pr.dsm.load(turn+pr.processID));
             }
-        }
+        }*/
     }
 }
