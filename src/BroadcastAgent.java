@@ -23,7 +23,7 @@ public class BroadcastAgent {
      * @param x The item to send.
      * @param v The value to send.
      * */
-    public void broadcast(String x, int v){
+    public void broadcast(String x, int v) throws InterruptedException{
         broadcastSystem.broadcast(x,v);
     }
 
@@ -35,7 +35,14 @@ public class BroadcastAgent {
      * */
     public void receive(String x, int v){
         if (dsm.load(x) != v){
-            dsm.store(x,v);
+            try {
+                dsm.store(x,v);
+
+            }catch (InterruptedException e){
+                e.printStackTrace();
+
+            }
+
         }
     }
 }

@@ -4,6 +4,7 @@
 public class Processor extends Thread {
     DSM dsm;
     int processID;
+    static int test = 1;
 
 
     public Processor(int processID, BroadcastSystem broadcastSystem){
@@ -44,11 +45,14 @@ public class Processor extends Thread {
         //<Critical Section>
         System.out.println("Process "+ processID+" is in the CS");
 
-//            try {
-//                Thread.sleep();
-//            } catch (InterruptedException e1) {
-//                e1.printStackTrace();
-//            }
+
+        System.out.println("   Increment test value by processor "+ processID "  =  "+(++test));
+
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
         System.out.println("Process "+ processID+" is leaving the CS");
         //<Critical Section>
 

@@ -54,15 +54,11 @@ public class Main {
         // run the processors
         for (Processor p : processors){
             p.start();
-        }
-
-/*        // test if broadcasting properly
-        for (Processor p : processors){
-            p.dsm.store(turn+p.processID, p.processID);
-            for (Processor pr : processors){
-                System.out.print("pro" + pr.processID + " --- ");
-                System.out.println(pr.dsm.load(turn+pr.processID));
+//            p.dsm.store("turn", p.processID);
+//            for (Processor pr : processors){
+//                System.out.print("pro" + pr.processID + " --- ");
+//                System.out.println(pr.dsm.load(turn));
             }
-        }*/
+//        }
     }
 }

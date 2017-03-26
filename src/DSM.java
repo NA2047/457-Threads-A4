@@ -17,7 +17,8 @@ public class DSM {
         return localMemory.load(x);
     }
 
-    public void store(String x, int v){
+    public void store(String x, int v) throws InterruptedException{
+
         // write v into x in local memory
         localMemory.store(x,v);
         // broadcast a message to all other DSMs to apply the write locally in their replicas
