@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * This class is the implementation of the broadcasting
  * mechanism between processors.
@@ -7,7 +9,7 @@
  */
 
 public class BroadcastSystem extends Thread {
-    private BroadcastAgent[] agentArray;
+    private ArrayList<BroadcastAgent> agentArray;
     boolean broadcast;
     String x;
     int v;
@@ -60,7 +62,7 @@ public class BroadcastSystem extends Thread {
      *
      * @param agentArray The array of all broadcastAgents.
      */
-    public void setAgents(BroadcastAgent[] agentArray) {
+    public void setAgents(ArrayList<BroadcastAgent> agentArray) {
         this.agentArray = agentArray;
     }
 }
