@@ -20,8 +20,8 @@ public class BroadcastAgent {
     /**
      * This method sends a store.
      *
-     * @param x The item to store.
-     * @param v The value to store.
+     * @param x The item to send.
+     * @param v The value to send.
      * */
     public void broadcast(String x, int v){
         broadcastSystem.broadcast(x,v);
@@ -29,6 +29,9 @@ public class BroadcastAgent {
 
     /**
      * This method receives a store.
+     *
+     * @param x The item to store.
+     * @param v The value to store.
      * */
     public void receive(String x, int v){
         if (dsm.load(x) != v){

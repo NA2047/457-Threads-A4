@@ -7,6 +7,7 @@ public class Main {
         BroadcastSystem broadcastSystem = new BroadcastSystem();
         // this broadcastSystem needs to be accessible by each broadcastAgent
 
+        // create all of the processors
         Processor pro0 = new Processor(0, broadcastSystem);
         Processor pro1 = new Processor(1, broadcastSystem);
         Processor pro2 = new Processor(2, broadcastSystem);
@@ -18,6 +19,7 @@ public class Main {
         Processor pro8 = new Processor(8, broadcastSystem);
         Processor pro9 = new Processor(9, broadcastSystem);
 
+        // The array of all broadcast agents to set in the broadcast system
         BroadcastAgent [] broadcastAgents = {
             pro0.dsm.broadcastAgent,
             pro1.dsm.broadcastAgent,
@@ -31,8 +33,10 @@ public class Main {
             pro9.dsm.broadcastAgent
         };
 
+        // set all of the agents in the broadcast system
         broadcastSystem.setAgents(broadcastAgents);
 
+        // run the processors
         pro0.start();
         pro1.start();
         pro2.start();
