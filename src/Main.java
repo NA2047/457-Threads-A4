@@ -11,7 +11,7 @@ public class Main {
         broadcastSystem.start();
         int numberOfProcessors = 100;
         int numberOfTokenRings = 1;
-        boolean enableTokenRing = false;
+        boolean enableTokenRing = true;
 
         ArrayList<Processor> processors = new ArrayList<>();
         ArrayList<BroadcastAgent> broadcastAgents = new ArrayList<>();

@@ -4,7 +4,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * This class is the implementation of the broadcasting
  * mechanism between processors.
- *
  * One BroadcastSystem object is shared between all BroadcastAgents.
  * Executes in a separate thread.
  */
@@ -41,7 +40,6 @@ public class BroadcastSystem extends Thread {
     /**
      * This method broadcasts the message to
      * store to each broadcastAgent.
-     *
      * @param msg The message to broadcast.
      */
     public void broadcast(Message msg) {
@@ -64,7 +62,6 @@ public class BroadcastSystem extends Thread {
 
     /**
      * This method sets the local array of broadcastAgents.
-     *
      * @param agentArray The array of all broadcastAgents.
      */
     public void setAgents(ArrayList<BroadcastAgent> agentArray) {

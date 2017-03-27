@@ -11,7 +11,7 @@ public class Processor extends Thread {
     TokenRingAgent tra;
     int processID;
     static int test = 0;
-    int N = 10;
+    int N ;
 
     /**
      * The constructor of Processor.
@@ -22,8 +22,9 @@ public class Processor extends Thread {
      */
     public Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings, int numberOfProcessors) {
         this.processID = processID; // process number
-        dsm = new DSM(broadcastSystem, numberOfProcessors);
-        tra = new TokenRingAgent(tokenRings, processID);
+        tra = new TokenRingAgent(tokenRings,this.processID);
+        dsm = new DSM(broadcastSystem, numberOfProcessors,tra);
+        this.N = numberOfProcessors;
     }
 
     /**

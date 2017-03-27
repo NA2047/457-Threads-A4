@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * Created by Sharon on 3/24/2017.
  */
 public class TokenRingAgent {
-    int tokenID;
+    int tokenID =-1;
     boolean Active = true;
     int processorID;
     int ringPredecessorID;
@@ -25,7 +25,6 @@ public class TokenRingAgent {
     /**
      * This method returns the unique identifier for the token
      * received from the predecessor.
-     *
      * @return the ID for the token received.
      * */
     public int receiveToken(int TokenID){
@@ -38,7 +37,6 @@ public class TokenRingAgent {
 
     /**
      * This method sends the token to the successor.
-     *
      * @param t is the Token to send.
      * */
     public void sendToken(Token t, ArrayList<TokenRingAgent> AgentList){
@@ -102,6 +100,10 @@ public class TokenRingAgent {
     public Boolean getActive(){
 //        System.out.println("checking active");
         return Active;
+    }
+
+    public int getToken(){
+        return tokenID;
     }
 
 
