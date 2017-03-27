@@ -16,15 +16,13 @@ public class Processor extends Thread {
     /**
      * The constructor of Processor.
      * processID and DSM are set.
-     *
      * @param processID       is the assigned processID.
      * @param broadcastSystem is the global instance.
      */
     public Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings, int numberOfProcessors) {
         this.processID = processID; // process number
-        tra.processorID = processID;
         dsm = new DSM(broadcastSystem, numberOfProcessors);
-        tra = new TokenRingAgent(tokenRings);
+        tra = new TokenRingAgent(tokenRings,this.processID);
     }
 
     /**
@@ -43,12 +41,12 @@ public class Processor extends Thread {
         // <Entry Section>
         for (int k = 0; k < N - 2; k++) {
             try { // processor that is competing at level k
-                dsm.store("flag" + processID, k);
+                dsm.store("flag" + processID, k,tra);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             try { // tells the current level that it's ProcessorIDs turn
-                dsm.store("turn" + k, processID);
+                dsm.store("turn" + k, processID,tra);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -63,7 +61,7 @@ public class Processor extends Thread {
 
         try {
             System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
-            Thread.sleep(50); // short delay to demonstrate that the algorithm is not perfect
+            Thread.sleep(50);
 
         } catch (InterruptedException e1) {
             e1.printStackTrace();
@@ -74,7 +72,7 @@ public class Processor extends Thread {
 
         // <Exit Section>
         try {
-            dsm.store("flag" + processID, -1);
+            dsm.store("flag" + processID, -1,tra);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -85,7 +83,6 @@ public class Processor extends Thread {
      * This method checks if there exists a k
      * such that flag[k] >= j, as per Peterson's
      * Algorithm.
-     *
      * @param k The k value to check.
      * @return Whether or not there exists such a k.
      */
