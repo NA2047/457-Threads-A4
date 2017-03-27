@@ -11,7 +11,13 @@ public class TokenRingAgent {
     int ringSuccessorID;
     ArrayList<TokenRing> tokenRings;
 
-    public TokenRingAgent(ArrayList<TokenRing> tokenRings,int processorID ){
+
+    /**
+     * Default constructor assigns current token ring to local copy and the processor ID of for this token ring
+     * @param tokenRings
+     * @param processorID
+     */
+    TokenRingAgent(ArrayList<TokenRing> tokenRings,int processorID ){
         this.tokenRings = tokenRings;
         this.processorID = processorID;
     }
@@ -42,13 +48,20 @@ public class TokenRingAgent {
 
     }
 
-
-    public void setPredecessor(int ringPredecessorID){
+    /**
+     * setter for ringPredecessor
+     * @param ringPredecessorID
+     */
+    public void setRingPredecessor(int ringPredecessorID){
 //        System.out.println("Setting Ring Predecessor for "+this.processorID+ " from "+ this.ringPredecessorID );
         this.ringPredecessorID = ringPredecessorID;
 //        System.out.print(" to "+ringPredecessorID);
     }
 
+    /**
+     * setter for ringSuccessor
+     * @param ringSuccessorID
+     */
     public void setRingSuccessor(int ringSuccessorID){
 //        System.out.println("Setting Ring Successor for "+this.processorID+ " from "+ this.ringSuccessorID);
         this.ringSuccessorID = ringSuccessorID;
@@ -56,23 +69,37 @@ public class TokenRingAgent {
 
     }
 
-    public int getProcID(){
+    /**
+     * getter for processor ID
+     * @return
+     */
+    public int getProcessorID(){
 
         return this.processorID;
     }
 
-
+    /**
+     * disables token agents
+     */
     public void disable (){
         Active = false;
     }
 
+    /**
+     * setter for Token
+     * @param t
+     */
     public void setTokenID(Token t){
 //        System.out.println("setting Token for "+ this.processorID);
         this.tokenID = t.tokenID;
 
     }
 
-    public Boolean checkIfActive(){
+    /**
+     * getter for avtive variable
+     * @return
+     */
+    public Boolean getActive(){
 //        System.out.println("checking active");
         return Active;
     }
