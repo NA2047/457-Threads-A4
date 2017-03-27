@@ -14,7 +14,7 @@ public class Processor extends Thread {
     int N = 10;
 
     /**
-     * The constructor of Processor. 
+     * The constructor of Processor.
      * processID and DSM are set.
      *
      * @param processID       is the assigned processID.
