@@ -23,7 +23,8 @@ public class Processor extends Thread {
     public Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings) {
         this.processID = processID; // process number
         dsm = new DSM(broadcastSystem);
-        tra = new TokenRingAgent(tokenRings);
+        tra.processorID = processID;
+//        tra = new TokenRingAgent(tokenRings);
     }
 
     /**
@@ -60,20 +61,20 @@ public class Processor extends Thread {
         // <Critical Section>
         System.out.println("Process " + processID + " is in the CS");
 
-        try {
-            System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
-            Thread.sleep(50); // short delay to demonstrate that the algorithm is not perfect
-
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
+//        try {
+//            System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
+//            Thread.sleep(50); // short delay
+//
+//        } catch (InterruptedException e1) {
+//            e1.printStackTrace();
+//        }
 
         System.out.println("Process " + processID + " is leaving the CS");
         // END <Critical Section>
 
         // <Exit Section>
         try {
-            dsm.store("flag" + processID, -1);
+            dsm.store("fl ag" + processID, -1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -91,9 +92,7 @@ public class Processor extends Thread {
     private Boolean ThereExists(int k) {
         for (int j = 0; j < 10; j++) {
             if (j != this.processID) {
-                if (dsm.load("flag" + j) >= k) {
-                    return true;
-                }
+                if (dsm.load("flag" + j) >= k) return true;
             }
         }
         return false;
