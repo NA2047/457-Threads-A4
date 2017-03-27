@@ -14,7 +14,7 @@ public class Processor extends Thread {
     int N = 10;
 
     /**
-     * The constructor of Processor.
+     * The constructor of Processor. 
      * processID and DSM are set.
      *
      * @param processID       is the assigned processID.
@@ -22,9 +22,8 @@ public class Processor extends Thread {
      */
     public Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings, int numberOfProcessors) {
         this.processID = processID; // process number
-        tra.processorID = processID;
         dsm = new DSM(broadcastSystem, numberOfProcessors);
-        tra = new TokenRingAgent(tokenRings);
+        tra = new TokenRingAgent(tokenRings, processID);
     }
 
     /**
