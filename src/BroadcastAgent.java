@@ -39,6 +39,7 @@ public class BroadcastAgent {
      * @param v The value to store.
      */
     public void receive(String x, int v) {
+//        TokenRingAgent tra = new TokenRingAgent();
         if (dsm.load(x) != v) {
             try {
                 dsm.store(x, v);

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class TokenRing extends Thread {
     ArrayList<TokenRingAgent> agentArray;
-    int tokenRingID;
+    int tokenRingID = 1;
     Token token;
     boolean enabled = true;
     int currentTokenAgentRingIndex;
@@ -20,14 +20,14 @@ public class TokenRing extends Thread {
     public TokenRing(int tokenRingID) {
         this.tokenRingID = tokenRingID;
         token = new Token(tokenRingID);
-        agentArray.get(0).receiveToken(1);
         currentTokenAgentRingIndex = 0;
         this.startUp = true;
     }
 
     @Override
     public void run() {
-        while (!interrupted()) {
+        agentArray.get(0).receiveToken(tokenRingID);
+        while (interrupted()) {
 //            int toSend = agentArray.get(findToken()).ringSuccessorID;
             if (currentTokenAgentRingIndex == 0 && startUp) {
 
@@ -56,7 +56,7 @@ public class TokenRing extends Thread {
                 currentTokenAgentRingIndex = 0;
             }
             try {
-                Thread.sleep(200); // may need to play around with time
+                Thread.sleep(100); // may need to play around with time
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

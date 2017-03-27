@@ -5,15 +5,17 @@
 public class DSM {
     LocalMemory localMemory;
     BroadcastAgent broadcastAgent;
+    TokenRingAgent tokenRingAgent;
 
     /**
      * The constructor of DSM.
      * LocalMemory and BroadcastAgent are instantiated.
      * @param broadcastSystem is the global instance.
      */
-    public DSM(BroadcastSystem broadcastSystem, int numberOfProcessors) {
+    public DSM(BroadcastSystem broadcastSystem, int numberOfProcessors,TokenRingAgent tokenRingAgent) {
         localMemory = new LocalMemory(numberOfProcessors);
         broadcastAgent = new BroadcastAgent(broadcastSystem, this);
+        this.tokenRingAgent = tokenRingAgent;
     }
 
     /**
@@ -32,9 +34,9 @@ public class DSM {
      * @param v The value to store.
      * @throws InterruptedException
      */
-    public void store(String x, int v,TokenRingAgent tra) throws InterruptedException {
-        while ((tra.tokenID ==-1) && (tra.getActive())){
-//            may want to sleep
+    public void store(String x, int v) throws InterruptedException {
+        while ((tokenRingAgent.tokenID == -1) && (tokenRingAgent.getActive())){
+////            may want to sleep
         }
 
 

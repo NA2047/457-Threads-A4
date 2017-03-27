@@ -11,7 +11,7 @@ public class Processor extends Thread {
     TokenRingAgent tra;
     int processID;
     static int test = 0;
-    int N = 10;
+    int N ;
 
     /**
      * The constructor of Processor.
@@ -21,8 +21,9 @@ public class Processor extends Thread {
      */
     public Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings, int numberOfProcessors) {
         this.processID = processID; // process number
-        dsm = new DSM(broadcastSystem, numberOfProcessors);
         tra = new TokenRingAgent(tokenRings,this.processID);
+        dsm = new DSM(broadcastSystem, numberOfProcessors,tra);
+        this.N = numberOfProcessors;
     }
 
     /**
@@ -41,12 +42,12 @@ public class Processor extends Thread {
         // <Entry Section>
         for (int k = 0; k < N - 2; k++) {
             try { // processor that is competing at level k
-                dsm.store("flag" + processID, k,tra);
+                dsm.store("flag" + processID, k);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             try { // tells the current level that it's ProcessorIDs turn
-                dsm.store("turn" + k, processID,tra);
+                dsm.store("turn" + k, processID);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -59,20 +60,20 @@ public class Processor extends Thread {
         // <Critical Section>
         System.out.println("Process " + processID + " is in the CS");
 
-        try {
-            System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
-            Thread.sleep(50);
-
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
+//        try {
+//            System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
+//            Thread.sleep(50);
+//
+//        } catch (InterruptedException e1) {
+//            e1.printStackTrace();
+//        }
 
         System.out.println("Process " + processID + " is leaving the CS");
         // END <Critical Section>
 
         // <Exit Section>
         try {
-            dsm.store("flag" + processID, -1,tra);
+            dsm.store("flag" + processID, -1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
