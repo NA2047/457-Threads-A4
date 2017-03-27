@@ -36,9 +36,8 @@ public class DSM {
      */
     public void store(String x, int v) throws InterruptedException {
         while ((tokenRingAgent.tokenID == -1) && (tokenRingAgent.getActive())){
-////            may want to sleep
+//            may want to sleep
         }
-
 
         // write v into x in local memory
         localMemory.store(x, v);

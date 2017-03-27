@@ -12,7 +12,6 @@ public class TokenRing extends Thread {
     ArrayList<TokenRingAgent> agentArray;
     int tokenRingID = 1;
     Token token;
-    boolean enabled = true;
     int currentTokenAgentRingIndex;
     Boolean startUp;
 
@@ -27,10 +26,9 @@ public class TokenRing extends Thread {
     @Override
     public void run() {
         agentArray.get(0).receiveToken(tokenRingID);
-        while (interrupted()) {
+        while (!interrupted()) {
 //            int toSend = agentArray.get(findToken()).ringSuccessorID;
             if (currentTokenAgentRingIndex == 0 && startUp) {
-
                 agentArray.get(currentTokenAgentRingIndex).setRingPredecessor(0);
                 int nextSuccesorIndex = currentTokenAgentRingIndex + 1;
                 agentArray.get(currentTokenAgentRingIndex).setRingSuccessor(nextSuccesorIndex);
@@ -74,14 +72,6 @@ public class TokenRing extends Thread {
             index++;
         }
         return -2;
-    }
-
-
-    /**
-     * disable token rings
-     */
-    public void disable() {
-        enabled = false;
     }
 
     /**

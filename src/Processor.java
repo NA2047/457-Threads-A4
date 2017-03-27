@@ -42,13 +42,12 @@ public class Processor extends Thread {
     public void petersonsN() {
         // <Entry Section>
         for (int k = 0; k < N - 2; k++) {
-            try { // processor that is competing at level k
+            try {
+                // processor that is competing at level k
                 dsm.store("flag" + processID, k);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            try { // tells the current level that it's ProcessorIDs turn
+                // tells the current level that it's ProcessorIDs turn
                 dsm.store("turn" + k, processID);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
