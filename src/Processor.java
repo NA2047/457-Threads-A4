@@ -22,6 +22,7 @@ public class Processor extends Thread {
      */
     public Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings, int numberOfProcessors) {
         this.processID = processID; // process number
+        tra.processorID = processID;
         dsm = new DSM(broadcastSystem, numberOfProcessors);
         tra = new TokenRingAgent(tokenRings);
     }
@@ -62,7 +63,7 @@ public class Processor extends Thread {
 
         try {
             System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
-            Thread.sleep(50); // short delay to
+            Thread.sleep(50); // short delay to demonstrate that the algorithm is not perfect
 
         } catch (InterruptedException e1) {
             e1.printStackTrace();
@@ -91,9 +92,7 @@ public class Processor extends Thread {
     private Boolean ThereExists(int k) {
         for (int j = 0; j < 10; j++) {
             if (j != this.processID) {
-                if (dsm.load("flag" + j) >= k) {
-                    return true;
-                }
+                if (dsm.load("flag" + j) >= k) return true;
             }
         }
         return false;

@@ -41,6 +41,10 @@ public class Main {
             }
             else {
                 tr.disable();
+                for(TokenRingAgent tokenRingAgent1: tokenRingAgents){
+                    tokenRingAgent1.disable();
+                }
+                // for each token ring agent, call the disable method
             }
 
         }
