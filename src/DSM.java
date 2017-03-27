@@ -12,8 +12,8 @@ public class DSM {
      *
      * @param broadcastSystem is the global instance.
      */
-    public DSM(BroadcastSystem broadcastSystem) {
-        localMemory = new LocalMemory();
+    public DSM(BroadcastSystem broadcastSystem, int numberOfProcessors) {
+        localMemory = new LocalMemory(numberOfProcessors);
         broadcastAgent = new BroadcastAgent(broadcastSystem, this);
     }
 

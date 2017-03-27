@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * This class is the implementation of the broadcasting
@@ -10,10 +11,11 @@ import java.util.ArrayList;
 
 public class BroadcastSystem extends Thread {
     private ArrayList<BroadcastAgent> agentArray;
+    private ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<>();
     boolean broadcast;
     String x;
     int v;
-    int time = 500;
+    int time = 300;
 
     /**
      * The overridden run method.
@@ -25,23 +27,26 @@ public class BroadcastSystem extends Thread {
         while (!interrupted()) {
             if (broadcast) {
                 delay();
-                broadcast(x, v);
-                delay();
+                messages.add(new Message(x,v));
+                while (!messages.isEmpty()){
+                    broadcast(messages.peek());
+                    messages.poll();
+                    delay();
+                }
                 broadcast = false;
             }
         }
     }
 
     /**
-     * This method broadcasts the item and value to
+     * This method broadcasts the message to
      * store to each broadcastAgent.
      *
-     * @param x The item to store.
-     * @param v The value to store.
+     * @param msg The message to broadcast.
      */
-    public void broadcast(String x, int v) {
+    public void broadcast(Message msg) {
         for (BroadcastAgent agent : agentArray) {
-            agent.receive(x, v);
+            agent.receive(msg.x, msg.v);
         }
     }
 
@@ -65,4 +70,16 @@ public class BroadcastSystem extends Thread {
     public void setAgents(ArrayList<BroadcastAgent> agentArray) {
         this.agentArray = agentArray;
     }
+
+    public class Message {
+        String x;
+        int v;
+
+        public Message(String x, int v){
+            this.x = x;
+            this.v = v;
+        }
+    }
 }
+
+

@@ -20,9 +20,9 @@ public class Processor extends Thread {
      * @param processID       is the assigned processID.
      * @param broadcastSystem is the global instance.
      */
-    public Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings) {
+    public Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings, int numberOfProcessors) {
         this.processID = processID; // process number
-        dsm = new DSM(broadcastSystem);
+        dsm = new DSM(broadcastSystem, numberOfProcessors);
         tra = new TokenRingAgent(tokenRings);
     }
 
@@ -62,7 +62,7 @@ public class Processor extends Thread {
 
         try {
             System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
-            Thread.sleep(50); // short delay to demonstrate that the algorithm is not perfect
+            Thread.sleep(50); // short delay to
 
         } catch (InterruptedException e1) {
             e1.printStackTrace();
