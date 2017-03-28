@@ -12,9 +12,9 @@ public class Main {
     public static void main(String[] args) {
         BroadcastSystem broadcastSystem = new BroadcastSystem();
         broadcastSystem.start();
-        int numberOfProcessors = 10;
+        int numberOfProcessors = 5;
         int numberOfTokenRings = 1;
-        boolean enableTokenRing = true;
+        boolean enableTokenRing = false;
 
         ArrayList<Processor> processors = new ArrayList<>();
         ArrayList<BroadcastAgent> broadcastAgents = new ArrayList<>();
@@ -33,7 +33,7 @@ public class Main {
         for (int i = 0; i < numberOfProcessors; i++) {
             processors.add(new Processor(i, broadcastSystem, tokenRings, numberOfProcessors));
 //            broadcastAgents.add(processors.get(i).dsm.broadcastAgent);
-//            tokenRingAgents.add(processors.get(i).tra);
+            tokenRingAgents.add(processors.get(i).tra);
 //            agentArray.pu
         }
 

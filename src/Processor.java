@@ -64,11 +64,11 @@ public class Processor extends Thread {
             // processor that is competing at level k
 
                 dsm.store("flag" + processID, k);
-//            System.out.println("     " + processID + " stored flag");
+            System.out.println("     " + processID + " stored flag");
             // tells the current level that it's ProcessorIDs turn
                 dsm.store("turn" + k, processID);
 
-//            System.out.println("     " + processID + " stored turn");
+            System.out.println("     " + processID + " stored turn");
 //                Thread.sleep(100);
 
             //the while loop from peterson's algorithm
