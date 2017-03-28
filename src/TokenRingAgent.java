@@ -32,6 +32,9 @@ public class TokenRingAgent {
         }
     }
 
+    /**
+     * tell the ring Run method that the tokenAgent wants the Token
+     */
     public void requestToken() {
         needToken = true;
     }
@@ -67,7 +70,7 @@ public class TokenRingAgent {
     /**
      * setter for ringPredecessor
      *
-     * @param ringPredecessorID
+     * @param ringPredecessorID sets the ring successor to this value
      */
     public void setRingPredecessor(int ringPredecessorID) {
 //        System.out.println("Setting Ring Predecessor for "+this.processorID+ " from "+ this.ringPredecessorID );
@@ -78,7 +81,7 @@ public class TokenRingAgent {
     /**
      * setter for ringSuccessor
      *
-     * @param ringSuccessorID
+     * @param ringSuccessorID sets the ring successor to this value
      */
     public void setRingSuccessor(int ringSuccessorID) {
 //        System.out.println("Setting Ring Successor for "+this.processorID+ " from "+ this.ringSuccessorID);
@@ -90,7 +93,7 @@ public class TokenRingAgent {
     /**
      * getter for processor ID
      *
-     * @return
+     * @return return processor ID
      */
     public int getProcessorID() {
         return this.processorID;
@@ -106,7 +109,7 @@ public class TokenRingAgent {
     /**
      * setter for Token
      *
-     * @param t
+     * @param t token to be set
      */
     public void setTokenID(Token t) {
 //        System.out.println("setting Token for "+ this.processorID);
@@ -116,7 +119,7 @@ public class TokenRingAgent {
     /**
      * getter for avtive variable
      *
-     * @return
+     * @return return the current value of Active
      */
     public Boolean getActive() {
 //        System.out.println("checking active");

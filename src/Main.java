@@ -65,13 +65,18 @@ public class Main {
             numberOfTokenRings = numberOfProcessors-1;
         }
 
-        // create token rings
+        /**
+         * create token rings
+          */
         for (int i = 0; i < numberOfTokenRings; i++) {
             TokenRing tr = new TokenRing(i);
             tokenRings.add(tr);
         }
 
-        // create all of the processors
+        /**
+         *   create all of the processors
+         */
+
         for (int i = 0; i < numberOfProcessors; i++) {
             processors.add(new Processor(i, broadcastSystem, tokenRings, numberOfProcessors, multipleTR));
 //            broadcastAgents.add(processors.get(i).dsm.broadcastAgent);
@@ -79,9 +84,11 @@ public class Main {
 //            agentArray.pu
         }
 
-        // set all of the agents in the broadcast system
-//        broadcastSystem.setAgents(broadcastAgents);
-
+        //
+        /**
+         * set all of the agents in the broadcast system
+         * broadcastSystem.setAgents(broadcastAgents);
+         */
         if (enableTokenRing) {
             // set tokenRingAgents and start the token ring(s)
             for (TokenRing tr : tokenRings) {
@@ -95,9 +102,6 @@ public class Main {
             }
         }
 
-        // TODO: order of token ring and processor starting interfering with first few processes
-        // TODO: token ring agent is enabled right away? disable until processor is run?
-        // TODO: let all processors get stuck at first store, then allow a token to be passed?
 
         // start each thread
         for (Processor p : processors) {
