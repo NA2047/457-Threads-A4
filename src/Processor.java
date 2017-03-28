@@ -13,6 +13,7 @@ public class Processor extends Thread {
     int processID;
     static int test = 0;
     int N;
+    boolean multipleTR;
 
     /**
      * The constructor of Processor.
@@ -21,11 +22,12 @@ public class Processor extends Thread {
      * @param processID       is the assigned processID.
      * @param broadcastSystem is the global instance.
      */
-    public Processor(int processID, BroadcastSystem broadcastSystem, ConcurrentLinkedQueue<TokenRing> tokenRings, int numberOfProcessors) {
+    public Processor(int processID, BroadcastSystem broadcastSystem, ConcurrentLinkedQueue<TokenRing> tokenRings, int numberOfProcessors, boolean multipleTR) {
         this.processID = processID; // process number
         tra = new TokenRingAgent(tokenRings, this);
         dsm = new DSM(broadcastSystem, this, tra);
         this.N = numberOfProcessors;
+        this.multipleTR = multipleTR;
     }
 
     /**
@@ -60,15 +62,15 @@ public class Processor extends Thread {
 //                e.printStackTrace();
 //            }  //Tells level[K] that its "id"'s turn
 //            System.out.println(".");
-            System.out.println(processID + " went into loop to store flag and turn --- iteration: " + k);
+//            System.out.println(processID + " went into loop to store flag and turn --- iteration: " + k);
             // processor that is competing at level k
 
                 dsm.store("flag" + processID, k);
-            System.out.println("     " + processID + " stored flag");
+//            System.out.println("     " + processID + " stored flag");
             // tells the current level that it's ProcessorIDs turn
                 dsm.store("turn" + k, processID);
 
-            System.out.println("     " + processID + " stored turn");
+//            System.out.println("     " + processID + " stored turn " + k);
 //                Thread.sleep(100);
 
             //the while loop from peterson's algorithm

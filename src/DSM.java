@@ -1,3 +1,5 @@
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 /**
  * This class represents the DSM layer.
  */
@@ -8,6 +10,8 @@ public class DSM {
     TokenRingAgent tokenRingAgent;
     Processor proc;
     int tokenValue = -1;
+    ConcurrentLinkedQueue<Token> tokens;
+    Token token;
 
     /**
      * The constructor of DSM.
@@ -19,6 +23,7 @@ public class DSM {
         localMemory = new LocalMemory(proc.N);
         broadcastAgent = new BroadcastAgent(broadcastSystem, this);
         this.tokenRingAgent = tokenRingAgent;
+        tokens = new ConcurrentLinkedQueue<>();
     }
 
     /**
@@ -69,21 +74,55 @@ public class DSM {
                 tokenRingAgent.tokenRings.peek().removeAgent(tokenRingAgent);
                 return;
             }
+            // if there is > 1 token ring, flag storage does not require a token
+            else if (x.contains("flag") && proc.multipleTR){}
             else {
 //                System.out.println("pid: " + proc.processID + " & token: " + tokenValue);
-                while (tokenValue == -1){
+                if (proc.multipleTR){
+                    // the token it needs to acquire needs to be the same number as the turn
+                    String temp = x;
+                    while (Character.isLetter(temp.charAt(0))){
+                        temp = temp.substring(1);
+                    }
+                    int turn = Integer.parseInt(temp);
+                    while (tokens.isEmpty()){
+                        tokenRingAgent.requestToken();
+                    }
+
+                    try {
+                        proc.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    while (!tokens.isEmpty() && tokens.peek().tokenID != turn){
+//                        try {
+//                            proc.sleep(0);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+                        tokenRingAgent.sendToken(tokens.poll());
+                        tokenRingAgent.requestToken();
+//                        try {
+//                            proc.sleep(0);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+                }
+                while (!proc.multipleTR && tokenValue == -1){
 //                System.out.println("stuck");
-                    try {
-                        proc.sleep(0);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        proc.sleep(0);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                     tokenRingAgent.requestToken();
-                    try {
-                        proc.sleep(0);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        proc.sleep(0);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
 //                System.out.println(proc.processID + " has token ID: " + tokenRingAgent.tokenID);
                 }
             }
@@ -96,8 +135,11 @@ public class DSM {
         broadcastAgent.dsm.localMemory.store(x, v);
 //        broadcastAgent.broadcast(x,v);
 
-        if (v != -1 && tokenRingAgent.getActive()){
-            tokenRingAgent.sendToken();
+        if (x.contains("flag") && proc.multipleTR){
+            // don't need to send token if multiple token rings and storing flag
+        }
+        else if (v != -1 && !proc.multipleTR && tokenRingAgent.getActive()){
+            tokenRingAgent.sendToken(null);
 //            System.out.println(proc.processID + " has token ID: " + tokenRingAgent.tokenID);
         }
         else {

@@ -12,9 +12,10 @@ public class Main {
     public static void main(String[] args) {
         BroadcastSystem broadcastSystem = new BroadcastSystem();
         broadcastSystem.start();
-        int numberOfProcessors = 5;
+        int numberOfProcessors = 10;
         int numberOfTokenRings = 1;
-        boolean enableTokenRing = false;
+        boolean enableTokenRing = true;
+        boolean multipleTR = true;
 
         ArrayList<Processor> processors = new ArrayList<>();
         ArrayList<BroadcastAgent> broadcastAgents = new ArrayList<>();
@@ -22,6 +23,9 @@ public class Main {
         ConcurrentLinkedQueue<TokenRingAgent> tokenRingAgents = new ConcurrentLinkedQueue<>();
 //        BlockingQueue<TokenRingAgent> agentArray = new ArrayBlockingQueue<TokenRingAgent>(numberOfProcessors);;
 
+        if (multipleTR){
+            numberOfTokenRings = numberOfProcessors-1;
+        }
 
         // create token rings
         for (int i = 0; i < numberOfTokenRings; i++) {
@@ -31,7 +35,7 @@ public class Main {
 
         // create all of the processors
         for (int i = 0; i < numberOfProcessors; i++) {
-            processors.add(new Processor(i, broadcastSystem, tokenRings, numberOfProcessors));
+            processors.add(new Processor(i, broadcastSystem, tokenRings, numberOfProcessors, multipleTR));
 //            broadcastAgents.add(processors.get(i).dsm.broadcastAgent);
             tokenRingAgents.add(processors.get(i).tra);
 //            agentArray.pu

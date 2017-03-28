@@ -11,6 +11,7 @@ public class TokenRingAgent {
     int ringPredecessorID;
     int ringSuccessorID;
     ConcurrentLinkedQueue<TokenRing> tokenRings;
+
     Processor proc;
     boolean needToken = false;
 
@@ -21,11 +22,14 @@ public class TokenRingAgent {
      * @param proc
      */
     TokenRingAgent(ConcurrentLinkedQueue<TokenRing> tokenRings, Processor proc) {
-        // for all token rings, add this token ring agent
-        tokenRings.peek().addItems(this);
         this.tokenRings = tokenRings;
         this.processorID = proc.processID;
         this.proc = proc;
+
+        // for all token rings, add this token ring agent
+        for (TokenRing tr: tokenRings){
+            tr.addAgent(this);
+        }
     }
 
     public void requestToken() {
@@ -37,17 +41,27 @@ public class TokenRingAgent {
      * received from the predecessor.
      */
     public void receiveToken(Token t) {
-//        tokenRings.get(0).passToken = false;
-        tokenID = t.tokenID;
-        proc.dsm.tokenValue = t.tokenID;
+        if (proc.multipleTR){
+            proc.dsm.tokens.add(t);
+        }
+        else{
+            //        tokenRings.get(0).passToken = false;
+            tokenID = t.tokenID;
+            proc.dsm.tokenValue = t.tokenID;
+        }
     }
 
     /**
      * This method sends the token to the successor.
      */
-    public void sendToken() {
-        tokenID = -1;
-        proc.dsm.tokenValue = -1;
+    public void sendToken(Token t) {
+        if (proc.multipleTR){
+            proc.dsm.tokens.remove(t);
+        }
+        else {
+            tokenID = -1;
+            proc.dsm.tokenValue = -1;
+        }
     }
 
     /**
@@ -79,7 +93,6 @@ public class TokenRingAgent {
      * @return
      */
     public int getProcessorID() {
-
         return this.processorID;
     }
 
@@ -98,7 +111,6 @@ public class TokenRingAgent {
     public void setTokenID(Token t) {
 //        System.out.println("setting Token for "+ this.processorID);
         this.tokenID = t.tokenID;
-
     }
 
     /**
