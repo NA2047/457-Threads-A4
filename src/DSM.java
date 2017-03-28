@@ -71,7 +71,7 @@ public class DSM {
             }
             else {
 //                System.out.println("pid: " + proc.processID + " & token: " + tokenValue);
-                while ((tokenValue == -1)){
+                while (tokenValue == -1){
 //                System.out.println("stuck");
                     try {
                         proc.sleep(0);
@@ -94,7 +94,7 @@ public class DSM {
         // broadcast a message to all other DSMs to apply the write locally in their replicas
 
         broadcastAgent.dsm.localMemory.store(x, v);
-
+//        broadcastAgent.broadcast(x,v);
 
         if (v != -1 && tokenRingAgent.getActive()){
             tokenRingAgent.sendToken();

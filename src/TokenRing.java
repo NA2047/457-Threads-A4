@@ -19,6 +19,10 @@ public class TokenRing extends Thread {
     int i = 0;
     boolean flag = true;
 
+    /**
+     * constructor for token ring, set instance variables
+     * @param tokenRingID
+     */
     public TokenRing(int tokenRingID) {
         this.tokenRingID = tokenRingID;
         token = new Token(tokenRingID);
@@ -27,6 +31,9 @@ public class TokenRing extends Thread {
 
     }
 
+    /**
+     * run method for TokenRing listens for to
+     */
     @Override
     public void run() {
         try {
@@ -104,6 +111,10 @@ public class TokenRing extends Thread {
 //        agentArray.add(tokenRingAgent);
 //    }
 
+    /**
+     * add each agent upon creation to agentArray
+     * @param tokenRingAgent agent of proccersor thread
+     */
     public void addItems(TokenRingAgent tokenRingAgent){
         agentArray.add(tokenRingAgent);
     }
