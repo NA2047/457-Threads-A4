@@ -1,92 +1,111 @@
-import org.omg.CORBA.INTERNAL;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
- * Created by Kleen star on 2017-03-22.
+ * This class represents a processor.
+ * <p>
+ * Executes in a separate thread.
  */
+
 public class Processor extends Thread {
     DSM dsm;
+    TokenRingAgent tra;
     int processID;
+    static int test = 0;
+    int N;
 
-
-    public Processor(int processID, BroadcastSystem broadcastSystem){
-        //process number
-        this.processID = processID;
-        dsm = new DSM(broadcastSystem);
+    /**
+     * The constructor of Processor.
+     * processID and DSM are set.
+     *
+     * @param processID       is the assigned processID.
+     * @param broadcastSystem is the global instance.
+     */
+    public Processor(int processID, BroadcastSystem broadcastSystem, ConcurrentLinkedQueue<TokenRing> tokenRings, int numberOfProcessors) {
+        this.processID = processID; // process number
+        tra = new TokenRingAgent(tokenRings, this);
+        dsm = new DSM(broadcastSystem, this, tra);
+        this.N = numberOfProcessors;
     }
 
-    public void run(){
-        // setups processes and calls pertersons algo
-        // need to set up agents
-
-        while (!interrupted()){
-            petersonsN();
-        }
-
-
+    /**
+     * The overridden run method.
+     * Calls Peterson's algorithm.
+     */
+    @Override
+    public void run() {
+        petersonsN();
+        System.out.println(processID + " is done");
     }
-//    flag = ;
-//    turn ends up being the late comer
 
-    public void petersonsN(){
-        //<Entry Section>
-        for(int k =0; k < 8; k++){
-            dsm.store("flag"+this.processID,k);
-            dsm.store("turn"+k,this.processID);
-            for (int i =0;i<10;i++){
+    /**
+     * This method represents Peterson's algorithm.
+     */
+    public void petersonsN() {
+        // <Entry Section>
+        for (int k = 0; k < N - 1; k++) {
+//            System.out.println(".");
+//            System.out.println(processID + " went into loop to store flag and turn --- iteration: " + k);
+            // processor that is competing at level k
+            dsm.store("flag" + processID, k);
+//            System.out.println("     " + processID + " stored flag");
+            // tells the current level that it's ProcessorIDs turn
+            dsm.store("turn" + k, processID);
+//            System.out.println("     " + processID + " stored turn");
+//                Thread.sleep(100);
 
-                while ((i!=k)&& ((setFlag(i)>= k) && ))
+            //the while loop from peterson's algorithm
+            while ((ThereExists(k)) && (dsm.load("turn" + k) == processID)) {
+//                System.out.println(processID + " is in while");
             }
-
-
         }
+        // END <Entry Section>
 
+        // <Critical Section>
+//        System.out.println("   ***Process " + processID + " is in the CS***");
+        System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
 
+//        try {
+//            System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
+//            Thread.sleep(50); // short delay to demonstrate that the algorithm is not perfect
+//
+//        } catch (InterruptedException e1) {
+//            e1.printStackTrace();
+//        }
 
-        //<Critical Section>
-        System.out.println(processor);
+//        System.out.println("Process " + processID + " is leaving the CS");
+        // END <Critical Section>
 
-
-
-        //<Exit Section>
-
-
-        //<Remainder Section>
-
+        // <Exit Section>
+//        try {
+        dsm.store("flag" + processID, -1);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        // END <Exit Section>
     }
 
-    //Critical section. takes 2  Integers and returns their multiplication.
-    public Integer setFlag(int flag){
-
-        try {
-            flag =
+    /**
+     * This method checks if there exists a k
+     * such that flag[j] >= k, as per Peterson's
+     * Algorithm.
+     *
+     * @param k The k value to check.
+     * @return Whether or not there exists such a k.
+     */
+    private Boolean ThereExists(int k) {
+        for (int j = 0; j < N; j++) {
+            if (j != this.processID) {
+                if (dsm.load("flag" + j) >= k) return true;
+            }
         }
-
-
+        return false;
     }
-
-    public Integer setTurn(int turn){
-        try {
-
-        }
-
-    }
-
-
-    public void criticalSection(int processer) {
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-
-        }
-        System.out.println();
-
-
-    }
-
-
-
-
-
 }
+
+
+
+
+
+
+
