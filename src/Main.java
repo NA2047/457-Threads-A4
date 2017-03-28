@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * This is the Main class where the processors are created
@@ -9,14 +10,14 @@ public class Main {
     public static void main(String[] args) {
         BroadcastSystem broadcastSystem = new BroadcastSystem();
         broadcastSystem.start();
-        int numberOfProcessors = 3;
+        int numberOfProcessors = 11;
         int numberOfTokenRings = 1;
         boolean enableTokenRing = true;
 
         ArrayList<Processor> processors = new ArrayList<>();
         ArrayList<BroadcastAgent> broadcastAgents = new ArrayList<>();
-        ArrayList<TokenRing> tokenRings = new ArrayList<>();
-        ArrayList<TokenRingAgent> tokenRingAgents = new ArrayList<>();
+        ConcurrentLinkedQueue<TokenRing> tokenRings = new ConcurrentLinkedQueue<>();
+        ConcurrentLinkedQueue<TokenRingAgent> tokenRingAgents = new ConcurrentLinkedQueue<>();
 
         // create token rings
         for (int i = 0; i < numberOfTokenRings; i++) {
@@ -37,7 +38,7 @@ public class Main {
         if (enableTokenRing) {
             // set tokenRingAgents and start the token ring(s)
             for (TokenRing tr : tokenRings) {
-//                tr.setAgents(tokenRingAgents);
+                tr.setAgents(tokenRingAgents);
                 tr.start();
             }
         } else {
@@ -50,6 +51,7 @@ public class Main {
         // start each thread
         for (Processor p : processors) {
             p.start();
+
         }
     }
 }

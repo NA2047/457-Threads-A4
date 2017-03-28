@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * This class represents a processor.
@@ -20,7 +21,7 @@ public class Processor extends Thread {
      * @param processID       is the assigned processID.
      * @param broadcastSystem is the global instance.
      */
-    public Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings, int numberOfProcessors) {
+    public Processor(int processID, BroadcastSystem broadcastSystem, ConcurrentLinkedQueue<TokenRing> tokenRings, int numberOfProcessors) {
         this.processID = processID; // process number
         tra = new TokenRingAgent(tokenRings, this);
         dsm = new DSM(broadcastSystem, this, tra);
@@ -34,6 +35,7 @@ public class Processor extends Thread {
     @Override
     public void run() {
         petersonsN();
+        System.out.println(processID + " is done");
     }
 
     /**
@@ -42,22 +44,25 @@ public class Processor extends Thread {
     public void petersonsN() {
         // <Entry Section>
         for (int k = 0; k < N - 1; k++) {
-            System.out.println(processID + " went into loop to store flag and turn --- iteration: " + k);
+//            System.out.println(".");
+//            System.out.println(processID + " went into loop to store flag and turn --- iteration: " + k);
             // processor that is competing at level k
             dsm.store("flag" + processID, k);
-            System.out.println("     " + processID + " stored flag");
+//            System.out.println("     " + processID + " stored flag");
             // tells the current level that it's ProcessorIDs turn
             dsm.store("turn" + k, processID);
-            System.out.println("     " + processID + " stored turn");
+//            System.out.println("     " + processID + " stored turn");
 //                Thread.sleep(100);
 
             //the while loop from peterson's algorithm
-            while ((ThereExists(k)) && (dsm.load("turn" + k) == processID)) ;
+            while ((ThereExists(k)) && (dsm.load("turn" + k) == processID)) {
+//                System.out.println(processID + " is in while");
+            }
         }
         // END <Entry Section>
 
         // <Critical Section>
-        System.out.println("   ***Process " + processID + " is in the CS***");
+//        System.out.println("   ***Process " + processID + " is in the CS***");
         System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
 
 //        try {
@@ -68,7 +73,7 @@ public class Processor extends Thread {
 //            e1.printStackTrace();
 //        }
 
-        System.out.println("Process " + processID + " is leaving the CS");
+//        System.out.println("Process " + processID + " is leaving the CS");
         // END <Critical Section>
 
         // <Exit Section>

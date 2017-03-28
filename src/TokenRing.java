@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * This class is the arrangement of the token ring.
@@ -9,18 +10,16 @@ import java.util.ArrayList;
  * with  different token messages.
  */
 public class TokenRing extends Thread {
-    ArrayList<TokenRingAgent> agentArray;
+    ConcurrentLinkedQueue<TokenRingAgent> agentArray;
     int tokenRingID;
     Token token;
     int i = 0;
     boolean flag = true;
-//    boolean passToken = true;
-
 
     public TokenRing(int tokenRingID) {
         this.tokenRingID = tokenRingID;
         token = new Token(tokenRingID);
-        agentArray = new ArrayList<>();
+        agentArray = new ConcurrentLinkedQueue<>();
     }
 
     @Override
@@ -29,27 +28,25 @@ public class TokenRing extends Thread {
         // once the proc stores, give up the token
         // give the token to the next proc (i++)
         while (flag) {
-//            if (passToken){
             if (agentArray.size() == 0){
                 flag = false;
+                System.out.println("token ring empty");
                 break;
             }
-            if (i >= agentArray.size() - 1) {
-                i = 0;
+//            if (i >= agentArray.size() - 1) {
+//                i = 0;
+//            }
+            if (agentArray.peek().needToken) {
+                agentArray.peek().receiveToken(token);
+                agentArray.add(agentArray.poll());
             }
-            if (agentArray.get(i).needToken) {
-//                if (agentArray.get(i).needToken){
-                agentArray.get(i).receiveToken(token);
-                i++;
-//                }
-            }
-//            passToken = false;
             try {
                 Thread.sleep(100); // may need to play around with time
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        return;
     }
 
     public int findToken() {
@@ -66,11 +63,12 @@ public class TokenRing extends Thread {
     public void removeAgent(TokenRingAgent tra) {
         if (agentArray.contains(tra)){
             agentArray.remove(tra);
+            System.out.println("after removing, TRA array in order:");
+            for (TokenRingAgent t : agentArray){
+                System.out.print("  " + t.processorID + "  ");
+            }
+            System.out.println("");
         }
-    }
-
-    public void addAgent(TokenRingAgent tra) {
-        agentArray.add(tra);
     }
 
     /**
@@ -78,7 +76,7 @@ public class TokenRing extends Thread {
      *
      * @param agentArray The array of all broadcastAgents.
      */
-    public void setAgents(ArrayList<TokenRingAgent> agentArray) {
+    public void setAgents(ConcurrentLinkedQueue<TokenRingAgent> agentArray) {
         this.agentArray = agentArray;
     }
 

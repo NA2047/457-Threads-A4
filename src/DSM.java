@@ -35,22 +35,32 @@ public class DSM {
      * that store to all other DSMs.
      * @param x The item to store.
      * @param v The value to store.
-     * @throws InterruptedException
      */
-    public void store(String x, int v) /*throws InterruptedException*/ {
+    public void store(String x, int v) {
         if (tokenRingAgent.getActive()){
             if (v == -1){
-                tokenRingAgent.tokenRings.get(0).removeAgent(tokenRingAgent);
+                // need to change peek() to allow for picking the necessary token ring
+                // that corresponds to the turn that you want to write to
+                tokenRingAgent.tokenRings.peek().removeAgent(tokenRingAgent);
+                return;
             }
-            while ((tokenValue == -1)){
-                tokenRingAgent.requestToken();
-                try {
-                    proc.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            else {
+//                System.out.println("pid: " + proc.processID + " & token: " + tokenValue);
+                while ((tokenValue == -1)){
+//                System.out.println("stuck");
+                    try {
+                        proc.sleep(0);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    tokenRingAgent.requestToken();
+                    try {
+                        proc.sleep(0);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 //                System.out.println(proc.processID + " has token ID: " + tokenRingAgent.tokenID);
-//            may want to sleep
+                }
             }
         }
 
@@ -59,9 +69,12 @@ public class DSM {
         // broadcast a message to all other DSMs to apply the write locally in their replicas
         broadcastAgent.broadcast(x, v);
 
-        if (tokenRingAgent.getActive()){
+        if (v != -1 && tokenRingAgent.getActive()){
             tokenRingAgent.sendToken();
 //            System.out.println(proc.processID + " has token ID: " + tokenRingAgent.tokenID);
+        }
+        else {
+            return;
         }
     }
 }

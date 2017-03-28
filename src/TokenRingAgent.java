@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by Sharon on 3/24/2017.
@@ -9,7 +10,7 @@ public class TokenRingAgent {
     int processorID;
     int ringPredecessorID;
     int ringSuccessorID;
-    ArrayList<TokenRing> tokenRings;
+    ConcurrentLinkedQueue<TokenRing> tokenRings;
     Processor proc;
     boolean needToken = false;
 
@@ -19,17 +20,11 @@ public class TokenRingAgent {
      * @param tokenRings
      * @param proc
      */
-    TokenRingAgent(ArrayList<TokenRing> tokenRings, Processor proc) {
+    TokenRingAgent(ConcurrentLinkedQueue<TokenRing> tokenRings, Processor proc) {
         this.tokenRings = tokenRings;
-        tokenRings.get(0).addAgent(this);
         this.processorID = proc.processID;
         this.proc = proc;
-//        tokenID = 0;
     }
-
-//    public void remove() {
-//        tokenRings.get(0).removeAgent(this);
-//    }
 
     public void requestToken() {
         needToken = true;
@@ -51,7 +46,6 @@ public class TokenRingAgent {
     public void sendToken() {
         tokenID = -1;
         proc.dsm.tokenValue = -1;
-//        tokenRings.get(0).passToken = true;
     }
 
     /**
