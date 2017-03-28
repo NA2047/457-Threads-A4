@@ -65,10 +65,10 @@ public class Processor extends Thread {
 //            System.out.println(processID + " went into loop to store flag and turn --- iteration: " + k);
             // processor that is competing at level k
 
-                dsm.store("flag" + processID, k);
+            dsm.store("flag" + processID, k);
 //            System.out.println("     " + processID + " stored flag");
             // tells the current level that it's ProcessorIDs turn
-                dsm.store("turn" + k, processID);
+            dsm.store("turn" + k, processID);
 
 //            System.out.println("     " + processID + " stored turn " + k);
 //                Thread.sleep(100);
@@ -81,18 +81,20 @@ public class Processor extends Thread {
         // END <Entry Section>
 
         // <Critical Section>
-        System.out.println("   ***Process " + processID + " is in the CS***");
+//        System.out.println("   ***Process " + processID + " is in the CS***");
 //        System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
 
-//        try {
-//            System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
-//            Thread.sleep(50); // short delay to demonstrate that the algorithm is not perfect
-//
-//        } catch (InterruptedException e1) {
-//            e1.printStackTrace();
-//        }
+        try {
+            Thread.sleep(50); // short delay to demonstrate that the algorithm is not perfect
 
-        System.out.println("Process " + processID + " is leaving the CS");
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+
+        System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
+
+
+//        System.out.println("Process " + processID + " is leaving the CS");
         // END <Critical Section>
 
         // <Exit Section>

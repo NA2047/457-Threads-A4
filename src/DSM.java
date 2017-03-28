@@ -110,20 +110,22 @@ public class DSM {
 //                        }
                     }
                 }
-                while (!proc.multipleTR && tokenValue == -1){
+                else {
+                    while (tokenValue == -1){
 //                System.out.println("stuck");
-//                    try {
-//                        proc.sleep(0);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-                    tokenRingAgent.requestToken();
-//                    try {
-//                        proc.sleep(0);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
+                    try {
+                        proc.sleep(0);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                        tokenRingAgent.requestToken();
+                    try {
+                        proc.sleep(0);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 //                System.out.println(proc.processID + " has token ID: " + tokenRingAgent.tokenID);
+                    }
                 }
             }
         }

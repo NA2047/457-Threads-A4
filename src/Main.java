@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -12,10 +13,47 @@ public class Main {
     public static void main(String[] args) {
         BroadcastSystem broadcastSystem = new BroadcastSystem();
         broadcastSystem.start();
+
         int numberOfProcessors = 10;
         int numberOfTokenRings = 1;
         boolean enableTokenRing = true;
         boolean multipleTR = true;
+
+        Scanner in = new Scanner(System.in);
+        System.out.println("number of processors? default is 10");
+        System.out.print("> ");
+        String procNum = in.nextLine();
+        if (!procNum.equals("")){
+            numberOfProcessors = Integer.parseInt(procNum);
+        }
+        System.out.println("enable token ring? default is true, f to disable");
+        System.out.print("> ");
+        if (in.nextLine().equals("f")){
+            enableTokenRing = false;
+            multipleTR = false;
+        }
+        else{
+            System.out.println("multiple token rings? default is true, f to disable");
+            System.out.print("> ");
+            if (in.nextLine().equals("f")){
+                multipleTR = false;
+            }
+        }
+
+        String type;
+        if (!enableTokenRing){
+            type = "Peterson's";
+        }
+        else if (!multipleTR){
+            type = "Single TR";
+        }
+        else {
+            type = "Multi TR";
+        }
+
+        System.out.println("\n--- Settings ---");
+        System.out.println("|   Algo: " + type);
+        System.out.println("|   numberOfProcessors: " + numberOfProcessors + "   enableTokenRing: " + enableTokenRing + "   multipleTR: " + multipleTR + "\n");
 
         ArrayList<Processor> processors = new ArrayList<>();
         ArrayList<BroadcastAgent> broadcastAgents = new ArrayList<>();
