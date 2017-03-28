@@ -14,7 +14,7 @@ public class TokenRing extends Thread {
     int tokenRingID;
     Token token;
     int i = 0;
-    boolean flag;
+    boolean flag = true;
 
     public TokenRing(int tokenRingID) {
         this.tokenRingID = tokenRingID;
@@ -24,6 +24,11 @@ public class TokenRing extends Thread {
 
     @Override
     public void run() {
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // give the token to the first proc (i)
         // once the proc stores, give up the token
         // give the token to the next proc (i++)

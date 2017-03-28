@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         BroadcastSystem broadcastSystem = new BroadcastSystem();
         broadcastSystem.start();
-        int numberOfProcessors = 10;
+        int numberOfProcessors = 5;
         int numberOfTokenRings = 1;
         boolean enableTokenRing = true;
 
@@ -48,13 +48,12 @@ public class Main {
             }
         }
 
+        // TODO: order of token ring and processor starting interfering with first few processes
+        // TODO: token ring agent is enabled right away? disable until processor is run?
+        // TODO: let all processors get stuck at first store, then allow a token to be passed?
+
         // start each thread
         for (Processor p : processors) {
-            for (TokenRing tr : tokenRings) {
-                if (tr.flag == false){
-                    tr.flag = true;
-                }
-            }
             p.start();
         }
     }

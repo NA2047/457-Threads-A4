@@ -45,22 +45,23 @@ public class DSM {
                 return;
             }
             else {
-//                System.out.println("pid: " + proc.processID + " & token: " + tokenValue);
+
                 while ((tokenValue == -1)){
 //                System.out.println("stuck");
-                    try {
-                        proc.sleep(50);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        proc.sleep(50);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                     tokenRingAgent.requestToken();
-                    try {
-                        proc.sleep(50);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        proc.sleep(50);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
 //                System.out.println(proc.processID + " has token ID: " + tokenRingAgent.tokenID);
                 }
+                System.out.println("pid: " + proc.processID + " & token: " + tokenValue);
             }
         }
 
