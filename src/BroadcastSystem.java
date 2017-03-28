@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.*;
 
 /**
  * This class is the implementation of the broadcasting
@@ -9,12 +9,15 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 
 public class BroadcastSystem extends Thread {
+    private ConcurrentHashMap<String,Integer> broadCastMemory;
     private ArrayList<BroadcastAgent> agentArray;
     private ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<>();
     boolean broadcast;
     String x;
     int v;
     int time = 300;
+
+
 
     /**
      * The overridden run method.
@@ -60,23 +63,23 @@ public class BroadcastSystem extends Thread {
         }
     }
 
-    /**
-     * This method sets the local array of broadcastAgents.
-     * @param agentArray The array of all broadcastAgents.
-     */
-    public void setAgents(ArrayList<BroadcastAgent> agentArray) {
-        this.agentArray = agentArray;
-    }
+//    /**
+//     * This method sets the local array of broadcastAgents.
+//     * @param agentArray The array of all broadcastAgents.
+//     */
+//    public void setAgents(ArrayList<BroadcastAgent> agentArray) {
+//        this.agentArray = agentArray;
+//    }
 
-    public class Message {
-        String x;
-        int v;
-
-        public Message(String x, int v){
-            this.x = x;
-            this.v = v;
+        public void addAgent(BroadcastAgent BA){
+            this.agentArray.add(BA);
         }
-    }
+
+        public ConcurrentLinkedQueue getConcurrentlinked(){
+            return messages;
+        }
+
+
 }
 
 

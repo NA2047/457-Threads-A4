@@ -9,7 +9,7 @@ public class TokenRingAgent {
     int processorID;
     int ringPredecessorID;
     int ringSuccessorID;
-    ArrayList<TokenRing> tokenRings;
+//    ArrayList<TokenRing> tokenRings;
 
 
     /**
@@ -18,8 +18,10 @@ public class TokenRingAgent {
      * @param processorID
      */
     TokenRingAgent(ArrayList<TokenRing> tokenRings,int processorID ){
-        this.tokenRings = tokenRings;
+        tokenRings.get(0).addTokenAgents(this);
+//        this.tokenRings = tokenRings;
         this.processorID = processorID;
+        this.tokenID =-1;
     }
 
     /**
@@ -41,7 +43,7 @@ public class TokenRingAgent {
      * */
     public void sendToken(Token t, ArrayList<TokenRingAgent> AgentList){
 //        System.out.println("TokenAgent "+this.tokenID+" has Successor "+ this.ringSuccessorID);
-        AgentList.get(ringSuccessorID).receiveToken(t.tokenID);
+        AgentList.get(ringSuccessorID).receiveToken(t.getToken());
         tokenID = -1;
 
     }
@@ -89,7 +91,7 @@ public class TokenRingAgent {
      */
     public void setTokenID(Token t){
 //        System.out.println("setting Token for "+ this.processorID);
-        this.tokenID = t.tokenID;
+        this.tokenID = t.getToken();
 
     }
 
@@ -99,7 +101,7 @@ public class TokenRingAgent {
      */
     public Boolean getActive(){
 //        System.out.println("checking active");
-        return Active;
+            return Active;
     }
 
     public int getToken(){

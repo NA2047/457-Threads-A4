@@ -18,16 +18,23 @@ public class TokenRing extends Thread {
 
 
     public TokenRing(int tokenRingID) {
+        agentArray = new ArrayList<>();
         this.tokenRingID = tokenRingID;
         token = new Token(tokenRingID);
         currentTokenAgentRingIndex = 0;
         this.startUp = true;
     }
 
+    public void addTokenAgents(TokenRingAgent tokenRingAgent){
+        agentArray.add(tokenRingAgent);
+
+    }
+
     @Override
     public void run() {
-        agentArray.get(0).receiveToken(tokenRingID);
-        while (interrupted()) {
+//        agentArray.get(0).receiveToken(tokenRingID);
+        while (true) {
+            if (!(interrupted())) break;
 //            int toSend = agentArray.get(findToken()).ringSuccessorID;
             if (currentTokenAgentRingIndex == 0 && startUp) {
 
@@ -56,7 +63,7 @@ public class TokenRing extends Thread {
                 currentTokenAgentRingIndex = 0;
             }
             try {
-                Thread.sleep(100); // may need to play around with time
+                Thread.sleep(1); // may need to play around with time
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -91,6 +98,25 @@ public class TokenRing extends Thread {
      */
     public void setAgents(ArrayList<TokenRingAgent> agentArray) {
         this.agentArray = agentArray;
+    }
+
+    public void setSucseeorPredssesor(){
+
+        for(int i =0; i < agentArray.size();i++){
+            if( i == 0){
+                int S1 = agentArray.get(i+1).ringPredecessorID;
+                int P1 = agentArray.get(agentArray.size()-1).ringSuccessorID;
+
+            }
+
+
+
+
+
+
+
+        }
+
     }
 
 }

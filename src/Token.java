@@ -3,9 +3,13 @@
  */
 // Represents a token message
 public class Token {
-    int tokenID;
+    private int tokenID;
 
     public Token (int tokenID){
+
         this.tokenID = tokenID;
+    }
+    public int getToken(){
+        return tokenID;
     }
 }

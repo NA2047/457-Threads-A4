@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class Processor extends Thread {
     DSM dsm;
-    TokenRingAgent tra;
-    int processID;
+    int processID,N;
     static int test = 0;
-    int N ;
+    TokenRingAgent tokenRingAgent;
+    TokenRingAgent[] tokenRingAgents;
 
     /**
      * The constructor of Processor.
@@ -19,12 +19,13 @@ public class Processor extends Thread {
      * @param processID       is the assigned processID.
      * @param broadcastSystem is the global instance.
      */
-    public Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings, int numberOfProcessors) {
+     Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings, int numberOfProcessors) {
         this.processID = processID; // process number
-        tra = new TokenRingAgent(tokenRings,this.processID);
-        dsm = new DSM(broadcastSystem, numberOfProcessors,tra);
+         tokenRingAgent = new TokenRingAgent(tokenRings,this.processID);
+        dsm = new DSM(broadcastSystem, numberOfProcessors,tokenRingAgent);
         this.N = numberOfProcessors;
     }
+
 
     /**
      * The overridden run method.
@@ -40,7 +41,7 @@ public class Processor extends Thread {
      */
     public void petersonsN() {
         // <Entry Section>
-        for (int k = 0; k < N - 2; k++) {
+        for (int k = 0; k < N - 1; k++) {
             try { // processor that is competing at level k
                 dsm.store("flag" + processID, k);
             } catch (InterruptedException e) {
@@ -60,13 +61,13 @@ public class Processor extends Thread {
         // <Critical Section>
         System.out.println("Process " + processID + " is in the CS");
 
-//        try {
-//            System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
-//            Thread.sleep(50);
-//
-//        } catch (InterruptedException e1) {
-//            e1.printStackTrace();
-//        }
+        try {
+            System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
+            Thread.sleep(50);
+
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
 
         System.out.println("Process " + processID + " is leaving the CS");
         // END <Critical Section>
