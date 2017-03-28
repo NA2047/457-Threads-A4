@@ -49,13 +49,13 @@ public class DSM {
                 while ((tokenValue == -1)){
 //                System.out.println("stuck");
                     try {
-                        proc.sleep(0);
+                        proc.sleep(50);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     tokenRingAgent.requestToken();
                     try {
-                        proc.sleep(0);
+                        proc.sleep(50);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

@@ -87,7 +87,7 @@ public class Processor extends Thread {
 
     /**
      * This method checks if there exists a k
-     * such that flag[k] >= j, as per Peterson's
+     * such that flag[j] >= k, as per Peterson's
      * Algorithm.
      *
      * @param k The k value to check.

@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         BroadcastSystem broadcastSystem = new BroadcastSystem();
         broadcastSystem.start();
-        int numberOfProcessors = 11;
+        int numberOfProcessors = 10;
         int numberOfTokenRings = 1;
         boolean enableTokenRing = true;
 
@@ -50,8 +50,12 @@ public class Main {
 
         // start each thread
         for (Processor p : processors) {
+            for (TokenRing tr : tokenRings) {
+                if (tr.flag == false){
+                    tr.flag = true;
+                }
+            }
             p.start();
-
         }
     }
 }

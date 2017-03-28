@@ -14,7 +14,7 @@ public class TokenRing extends Thread {
     int tokenRingID;
     Token token;
     int i = 0;
-    boolean flag = true;
+    boolean flag;
 
     public TokenRing(int tokenRingID) {
         this.tokenRingID = tokenRingID;
