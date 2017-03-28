@@ -30,6 +30,31 @@ public class DSM {
         return localMemory.load(x);
     }
 
+
+//    public void store(String x, int v){
+//
+//        TokenRingAgent LocalTRA = proc.tra;
+//        int tok = LocalTRA.getToken();
+//
+////        while (LocalTRA.getActive() && tok ==-1){
+////            try {
+////                Thread.sleep(0);
+////            }
+////            catch (InterruptedException e){
+////                e.printStackTrace();
+////            }
+////        }
+//
+//        localMemory.store(x, v);
+//        // broadcast a message to all other DSMs to apply the write locally in their replicas
+//        try {
+//            broadcastAgent.broadcast(x, v);
+//
+//        }catch (InterruptedException e){
+//            e.printStackTrace();
+//        }
+//    }
+
     /**
      * This method stores to local memory and broadcasts
      * that store to all other DSMs.
@@ -45,30 +70,31 @@ public class DSM {
                 return;
             }
             else {
-
+//                System.out.println("pid: " + proc.processID + " & token: " + tokenValue);
                 while ((tokenValue == -1)){
 //                System.out.println("stuck");
-//                    try {
-//                        proc.sleep(50);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
+                    try {
+                        proc.sleep(0);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     tokenRingAgent.requestToken();
-//                    try {
-//                        proc.sleep(50);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
+                    try {
+                        proc.sleep(0);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 //                System.out.println(proc.processID + " has token ID: " + tokenRingAgent.tokenID);
                 }
-                System.out.println("pid: " + proc.processID + " & token: " + tokenValue);
             }
         }
 
         // write v into x in local memory
         localMemory.store(x, v);
         // broadcast a message to all other DSMs to apply the write locally in their replicas
-        broadcastAgent.broadcast(x, v);
+
+        broadcastAgent.dsm.localMemory.store(x, v);
+
 
         if (v != -1 && tokenRingAgent.getActive()){
             tokenRingAgent.sendToken();

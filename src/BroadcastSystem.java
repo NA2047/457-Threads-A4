@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -11,10 +14,40 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class BroadcastSystem extends Thread {
     private ArrayList<BroadcastAgent> agentArray;
     private ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<>();
+    public BlockingQueue<Message> blockingQueue;
+//    private HashMap<String,Integer> Memory;
     boolean broadcast;
     String x;
     int v;
     int time = 300;
+
+
+
+    BroadcastSystem(){
+        agentArray = new ArrayList<>();
+        blockingQueue = new ArrayBlockingQueue<Message>(5);
+
+    }
+
+
+//    public void run(){
+//        while (true){
+//            if(!blockingQueue.isEmpty()){
+//                Message temp = blockingQueue.remove();
+////                System.out.println(blockingQueue.size());
+//                for(BroadcastAgent broadcastAgent: agentArray){
+//                    broadcastAgent.receive(temp.x,temp.v);
+//                }
+//            }
+//            try{
+//                Thread.sleep(5);
+//            }
+//            catch (InterruptedException e){
+//                e.printStackTrace();
+//            }
+//        }
+//
+//    }
 
     /**
      * The overridden run method.
@@ -60,23 +93,23 @@ public class BroadcastSystem extends Thread {
         }
     }
 
-    /**
-     * This method sets the local array of broadcastAgents.
-     * @param agentArray The array of all broadcastAgents.
-     */
-    public void setAgents(ArrayList<BroadcastAgent> agentArray) {
-        this.agentArray = agentArray;
+//    /**
+//     * This method sets the local array of broadcastAgents.
+//     * @param agentArray The array of all broadcastAgents.
+//     */
+//    public void setAgents(ArrayList<BroadcastAgent> agentArray) {
+//        this.agentArray = agentArray;
+//    }
+
+    public void addAgents(BroadcastAgent broadcastAgent){
+        agentArray.add(broadcastAgent);
     }
 
-    public class Message {
-        String x;
-        int v;
+//    public BlockingQueue<Message> getBlockingQueue(){
+//        return blockingQueue;
+//    }
 
-        public Message(String x, int v){
-            this.x = x;
-            this.v = v;
-        }
-    }
+
 }
 
 

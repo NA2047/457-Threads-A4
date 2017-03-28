@@ -21,6 +21,7 @@ public class TokenRingAgent {
      * @param proc
      */
     TokenRingAgent(ConcurrentLinkedQueue<TokenRing> tokenRings, Processor proc) {
+        tokenRings.peek().addItems(this);
         this.tokenRings = tokenRings;
         this.processorID = proc.processID;
         this.proc = proc;

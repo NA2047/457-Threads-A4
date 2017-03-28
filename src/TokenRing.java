@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -11,6 +13,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class TokenRing extends Thread {
     ConcurrentLinkedQueue<TokenRingAgent> agentArray;
+//    BlockingQueue<TokenRingAgent> agentArray;
     int tokenRingID;
     Token token;
     int i = 0;
@@ -19,7 +22,9 @@ public class TokenRing extends Thread {
     public TokenRing(int tokenRingID) {
         this.tokenRingID = tokenRingID;
         token = new Token(tokenRingID);
+//        agentArray = new ArrayBlockingQueue<TokenRingAgent>(10);
         agentArray = new ConcurrentLinkedQueue<>();
+
     }
 
     @Override
@@ -33,7 +38,9 @@ public class TokenRing extends Thread {
         // once the proc stores, give up the token
         // give the token to the next proc (i++)
         while (flag) {
+
             if (agentArray.size() == 0){
+//                System.out.println("PID id "+agentArray.peek().processorID + " with token" + agentArray.peek().tokenID);
                 flag = false;
                 System.out.println("token ring empty");
                 break;
@@ -53,6 +60,34 @@ public class TokenRing extends Thread {
         }
         return;
     }
+//    public void run(){
+//
+////        while(flag){
+//            System.out.println("PID id "+agentArray.peek().processorID + " with token" + agentArray.peek().tokenID);
+//            while (!agentArray.isEmpty()){
+//                if (agentArray.size() == 0){
+//                flag = false;
+//                System.out.println("token ring empty");
+//                break;
+//            }
+//            if (i >= agentArray.size() - 1) {
+//                i = 0;
+//            }
+//            if (agentArray.peek().needToken) {
+//                agentArray.peek().receiveToken(token);
+//            }
+//            try {
+//                Thread.sleep(200); // may need to play around with time
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//
+//
+//
+//
+//        }
+//    }
+
 
     public int findToken() {
         int index = 0;
@@ -64,6 +99,15 @@ public class TokenRing extends Thread {
         }
         return -2;
     }
+
+//    public void addItems(TokenRingAgent tokenRingAgent){
+//        agentArray.add(tokenRingAgent);
+//    }
+
+    public void addItems(TokenRingAgent tokenRingAgent){
+        agentArray.add(tokenRingAgent);
+    }
+
 
     public void removeAgent(TokenRingAgent tra) {
         if (agentArray.contains(tra)){
@@ -81,9 +125,9 @@ public class TokenRing extends Thread {
      *
      * @param agentArray The array of all broadcastAgents.
      */
-    public void setAgents(ConcurrentLinkedQueue<TokenRingAgent> agentArray) {
-        this.agentArray = agentArray;
-    }
+//    public void setAgents(ArrayBlockingQueue<TokenRingAgent> agentArray) {
+//        this.agentArray = agentArray;
+//    }
 
 }
 
