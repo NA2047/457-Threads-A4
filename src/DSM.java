@@ -7,6 +7,7 @@ public class DSM {
     BroadcastAgent broadcastAgent;
     TokenRingAgent tokenRingAgent;
     Processor proc;
+    int tokenValue = -1;
 
     /**
      * The constructor of DSM.
@@ -39,10 +40,16 @@ public class DSM {
     public void store(String x, int v) /*throws InterruptedException*/ {
         if (tokenRingAgent.getActive()){
             if (v == -1){
-                tokenRingAgent.remove();
+                tokenRingAgent.tokenRings.get(0).removeAgent(tokenRingAgent);
             }
-            while ((tokenRingAgent.tokenID == -1)){
+            while ((tokenValue == -1)){
                 tokenRingAgent.requestToken();
+                try {
+                    proc.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+//                System.out.println(proc.processID + " has token ID: " + tokenRingAgent.tokenID);
 //            may want to sleep
             }
         }
@@ -54,6 +61,7 @@ public class DSM {
 
         if (tokenRingAgent.getActive()){
             tokenRingAgent.sendToken();
+//            System.out.println(proc.processID + " has token ID: " + tokenRingAgent.tokenID);
         }
     }
 }

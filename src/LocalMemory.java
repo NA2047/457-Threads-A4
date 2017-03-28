@@ -15,11 +15,11 @@ public class LocalMemory {
      * and the turn values are initialized to 0.
      */
     public LocalMemory(int numberOfProcessors) {
-        for (int i = 0; i < numberOfProcessors; i++){
-            memory.put("flag"+i, -1);
+        for (int i = 0; i < numberOfProcessors; i++) {
+            memory.put("flag" + i, -1);
         }
-        for (int i = 1; i < numberOfProcessors-1; i++){
-            memory.put("turn"+i, 0);
+        for (int i = 1; i < numberOfProcessors - 1; i++) {
+            memory.put("turn" + i, 0);
         }
     }
 
@@ -33,7 +33,7 @@ public class LocalMemory {
         if (memory.containsKey(x)) {
             return memory.get(x);
         } else {
-            System.out.println("cannot find " + x + " ");
+//            System.out.println("cannot find " + x + " ");
             return -5;
         }
     }

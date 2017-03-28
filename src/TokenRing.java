@@ -10,15 +10,17 @@ import java.util.ArrayList;
  */
 public class TokenRing extends Thread {
     ArrayList<TokenRingAgent> agentArray;
-    int tokenRingID = -1;
+    int tokenRingID;
     Token token;
     int i = 0;
+    boolean flag = true;
 //    boolean passToken = true;
 
 
     public TokenRing(int tokenRingID) {
         this.tokenRingID = tokenRingID;
         token = new Token(tokenRingID);
+        agentArray = new ArrayList<>();
     }
 
     @Override
@@ -26,21 +28,27 @@ public class TokenRing extends Thread {
         // give the token to the first proc (i)
         // once the proc stores, give up the token
         // give the token to the next proc (i++)
-        while (!interrupted()) {
+        while (flag) {
 //            if (passToken){
-            if (agentArray.get(i).needToken){
-                if (i >= agentArray.size()-1){ i = 0; }
+            if (agentArray.size() == 0){
+                flag = false;
+                break;
+            }
+            if (i >= agentArray.size() - 1) {
+                i = 0;
+            }
+            if (agentArray.get(i).needToken) {
 //                if (agentArray.get(i).needToken){
-                    agentArray.get(i).receiveToken(token);
-                    i++;
+                agentArray.get(i).receiveToken(token);
+                i++;
 //                }
             }
 //            passToken = false;
-//            try {
-//                Thread.sleep(100); // may need to play around with time
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                Thread.sleep(100); // may need to play around with time
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -55,8 +63,14 @@ public class TokenRing extends Thread {
         return -2;
     }
 
-    public void removeAgent(TokenRingAgent tra){
-        agentArray.remove(tra);
+    public void removeAgent(TokenRingAgent tra) {
+        if (agentArray.contains(tra)){
+            agentArray.remove(tra);
+        }
+    }
+
+    public void addAgent(TokenRingAgent tra) {
+        agentArray.add(tra);
     }
 
     /**

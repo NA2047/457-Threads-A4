@@ -36,8 +36,8 @@ public class Main {
 
         if (enableTokenRing) {
             // set tokenRingAgents and start the token ring(s)
-            for (TokenRing tr: tokenRings) {
-                tr.setAgents(tokenRingAgents);
+            for (TokenRing tr : tokenRings) {
+//                tr.setAgents(tokenRingAgents);
                 tr.start();
             }
         } else {
