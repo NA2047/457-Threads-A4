@@ -44,13 +44,30 @@ public class Processor extends Thread {
     public void petersonsN() {
         // <Entry Section>
         for (int k = 0; k < N - 1; k++) {
+
+//            try {
+//
+////                Thread.sleep(20);
+////                dsm.store("flag["+id+"]", k);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }  //Process "id" is competing at level k
+//            try {
+//
+//                Thread.sleep(20);
+//                dsm.store("turn["+k+"]", id);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }  //Tells level[K] that its "id"'s turn
 //            System.out.println(".");
 //            System.out.println(processID + " went into loop to store flag and turn --- iteration: " + k);
             // processor that is competing at level k
-            dsm.store("flag" + processID, k);
+
+                dsm.store("flag" + processID, k);
 //            System.out.println("     " + processID + " stored flag");
             // tells the current level that it's ProcessorIDs turn
-            dsm.store("turn" + k, processID);
+                dsm.store("turn" + k, processID);
+
 //            System.out.println("     " + processID + " stored turn");
 //                Thread.sleep(100);
 
@@ -62,8 +79,8 @@ public class Processor extends Thread {
         // END <Entry Section>
 
         // <Critical Section>
-//        System.out.println("   ***Process " + processID + " is in the CS***");
-        System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
+        System.out.println("   ***Process " + processID + " is in the CS***");
+//        System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
 
 //        try {
 //            System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
@@ -73,7 +90,7 @@ public class Processor extends Thread {
 //            e1.printStackTrace();
 //        }
 
-//        System.out.println("Process " + processID + " is leaving the CS");
+        System.out.println("Process " + processID + " is leaving the CS");
         // END <Critical Section>
 
         // <Exit Section>

@@ -1,3 +1,5 @@
+import java.util.concurrent.BlockingQueue;
+
 /**
  * This class provides the implementation of the broadcast
  * mechanism needed by DSM.
@@ -6,6 +8,7 @@
 public class BroadcastAgent {
     BroadcastSystem broadcastSystem;
     DSM dsm;
+    private BlockingQueue<Message> blockingQueue;
 
     /**
      * The constructor of BroadcastAgent.
@@ -16,8 +19,11 @@ public class BroadcastAgent {
      * @param dsm is the corresponding DSM for the BroadcastAgent.
      */
     public BroadcastAgent(BroadcastSystem broadcastSystem, DSM dsm) {
+
         this.broadcastSystem = broadcastSystem;
+        broadcastSystem.addAgents(this);
         this.dsm = dsm;
+        this.blockingQueue=broadcastSystem.blockingQueue;
     }
 
     /**
@@ -32,6 +38,11 @@ public class BroadcastAgent {
         broadcastSystem.broadcast = true;
     }
 
+//    public void broadcast(String x, int v) throws InterruptedException {
+//        Message temp = new Message(x,v);
+//        blockingQueue.put(temp);
+//;
+//    }
     /**
      * This method receives a store.
      *
@@ -39,13 +50,8 @@ public class BroadcastAgent {
      * @param v The value to store.
      */
     public void receive(String x, int v) {
-//        TokenRingAgent tra = new TokenRingAgent();
-        if (dsm.load(x) != v) {
-//            try {
-                dsm.store(x, v);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+        dsm.store(x, v);
+
         }
     }
-}
+

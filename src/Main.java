@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -18,6 +20,8 @@ public class Main {
         ArrayList<BroadcastAgent> broadcastAgents = new ArrayList<>();
         ConcurrentLinkedQueue<TokenRing> tokenRings = new ConcurrentLinkedQueue<>();
         ConcurrentLinkedQueue<TokenRingAgent> tokenRingAgents = new ConcurrentLinkedQueue<>();
+//        BlockingQueue<TokenRingAgent> agentArray = new ArrayBlockingQueue<TokenRingAgent>(numberOfProcessors);;
+
 
         // create token rings
         for (int i = 0; i < numberOfTokenRings; i++) {
@@ -28,17 +32,18 @@ public class Main {
         // create all of the processors
         for (int i = 0; i < numberOfProcessors; i++) {
             processors.add(new Processor(i, broadcastSystem, tokenRings, numberOfProcessors));
-            broadcastAgents.add(processors.get(i).dsm.broadcastAgent);
-            tokenRingAgents.add(processors.get(i).tra);
+//            broadcastAgents.add(processors.get(i).dsm.broadcastAgent);
+//            tokenRingAgents.add(processors.get(i).tra);
+//            agentArray.pu
         }
 
         // set all of the agents in the broadcast system
-        broadcastSystem.setAgents(broadcastAgents);
+//        broadcastSystem.setAgents(broadcastAgents);
 
         if (enableTokenRing) {
             // set tokenRingAgents and start the token ring(s)
             for (TokenRing tr : tokenRings) {
-                tr.setAgents(tokenRingAgents);
+//                tr.setAgents(tokenRingAgents);
                 tr.start();
             }
         } else {
@@ -47,6 +52,7 @@ public class Main {
                 tra.disable();
             }
         }
+
 
         // start each thread
         for (Processor p : processors) {
