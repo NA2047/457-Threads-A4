@@ -22,7 +22,9 @@ public class BroadcastSystem extends Thread {
     int time = 300;
 
 
-
+    /**
+     *Defualt constructor initialize agentArray and BlockingQ
+     */
     BroadcastSystem(){
         agentArray = new ArrayList<>();
         blockingQueue = new ArrayBlockingQueue<Message>(5);
@@ -101,6 +103,10 @@ public class BroadcastSystem extends Thread {
 //        this.agentArray = agentArray;
 //    }
 
+    /**
+     * add agents to BoroadCastAgent array upon creation of the processor
+     * @param broadcastAgent Agent created from processor
+     */
     public void addAgents(BroadcastAgent broadcastAgent){
         agentArray.add(broadcastAgent);
     }

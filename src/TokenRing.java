@@ -91,16 +91,6 @@ public class TokenRing extends Thread {
 //    }
 
 
-    public int findToken() {
-        int index = 0;
-        for (TokenRingAgent tokenRingAgent : agentArray) {
-            if (tokenRingAgent.getToken() != -1) {
-                return index;
-            }
-            index++;
-        }
-        return -2;
-    }
 
 //    public void addItems(TokenRingAgent tokenRingAgent){
 //        agentArray.add(tokenRingAgent);
@@ -108,13 +98,16 @@ public class TokenRing extends Thread {
 
     /**
      * add each agent upon creation to agentArray
-     * @param tokenRingAgent agent of proccersor thread
+     * @param tokenRingAgent agent of Processor thread
      */
     public void addItems(TokenRingAgent tokenRingAgent){
         agentArray.add(tokenRingAgent);
     }
 
-
+    /**
+     *  this method removes agent from the Q after they have stored -1
+     * @param tra agent to be removed from Q
+     */
     public void removeAgent(TokenRingAgent tra) {
         if (agentArray.contains(tra)){
             agentArray.remove(tra);

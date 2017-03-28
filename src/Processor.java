@@ -39,7 +39,7 @@ public class Processor extends Thread {
     }
 
     /**
-     * This method represents Peterson's algorithm.
+     * This is peterson's algo
      */
     public void petersonsN() {
         // <Entry Section>
@@ -82,13 +82,14 @@ public class Processor extends Thread {
         System.out.println("   ***Process " + processID + " is in the CS***");
 //        System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
 
-//        try {
-//            System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
-//            Thread.sleep(50); // short delay to demonstrate that the algorithm is not perfect
-//
-//        } catch (InterruptedException e1) {
-//            e1.printStackTrace();
-//        }
+        try {
+
+            Thread.sleep(100); // short delay to demonstrate that the algorithm is not perfect
+
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+        System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
 
         System.out.println("Process " + processID + " is leaving the CS");
         // END <Critical Section>
