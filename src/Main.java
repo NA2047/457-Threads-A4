@@ -9,14 +9,20 @@ public class Main {
     public static void main(String[] args) {
         BroadcastSystem broadcastSystem = new BroadcastSystem();
         broadcastSystem.start();
-        int numberOfProcessors = 10;
+        int numberOfProcessors = 3;
         int numberOfTokenRings = 1;
-        boolean enableTokenRing = false;
+        boolean enableTokenRing = true;
 
         ArrayList<Processor> processors = new ArrayList<>();
         ArrayList<BroadcastAgent> broadcastAgents = new ArrayList<>();
         ArrayList<TokenRing> tokenRings = new ArrayList<>();
         ArrayList<TokenRingAgent> tokenRingAgents = new ArrayList<>();
+
+        // create token rings
+        for (int i = 0; i < numberOfTokenRings; i++) {
+            TokenRing tr = new TokenRing(i);
+            tokenRings.add(tr);
+        }
 
         // create all of the processors
         for (int i = 0; i < numberOfProcessors; i++) {
@@ -28,14 +34,11 @@ public class Main {
         // set all of the agents in the broadcast system
         broadcastSystem.setAgents(broadcastAgents);
 
-        // set all of the agents in each token ring
         if (enableTokenRing) {
-            // create token rings, set tokenRingAgents and start the token ring
-            for (int i = 0; i < numberOfTokenRings; i++) {
-                TokenRing tr = new TokenRing(i);
-                tokenRings.add(tr);
+            // set tokenRingAgents and start the token ring(s)
+            for (TokenRing tr: tokenRings) {
                 tr.setAgents(tokenRingAgents);
-
+                tr.start();
             }
         } else {
             // for each token ring agent, call the disable method
@@ -47,9 +50,6 @@ public class Main {
         // start each thread
         for (Processor p : processors) {
             p.start();
-        }
-        for (TokenRing t : tokenRings){
-            t.start();
         }
     }
 }

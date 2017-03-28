@@ -26,7 +26,7 @@ public class BroadcastAgent {
      * @param x The item to send.
      * @param v The value to send.
      */
-    public void broadcast(String x, int v) throws InterruptedException {
+    public void broadcast(String x, int v) /*throws InterruptedException*/ {
         broadcastSystem.x = x;
         broadcastSystem.v = v;
         broadcastSystem.broadcast = true;
@@ -41,11 +41,11 @@ public class BroadcastAgent {
     public void receive(String x, int v) {
 //        TokenRingAgent tra = new TokenRingAgent();
         if (dsm.load(x) != v) {
-            try {
+//            try {
                 dsm.store(x, v);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 }

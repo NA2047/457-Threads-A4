@@ -10,56 +10,37 @@ import java.util.ArrayList;
  */
 public class TokenRing extends Thread {
     ArrayList<TokenRingAgent> agentArray;
-    int tokenRingID = 1;
+    int tokenRingID = -1;
     Token token;
-    int currentTokenAgentRingIndex;
-    Boolean startUp;
+    int i = 0;
+//    boolean passToken = true;
 
 
     public TokenRing(int tokenRingID) {
         this.tokenRingID = tokenRingID;
         token = new Token(tokenRingID);
-        currentTokenAgentRingIndex = 0;
-        this.startUp = true;
     }
 
     @Override
     public void run() {
-        agentArray.get(0).receiveToken(tokenRingID);
+        // give the token to the first proc (i)
+        // once the proc stores, give up the token
+        // give the token to the next proc (i++)
         while (!interrupted()) {
-//            int toSend = agentArray.get(findToken()).ringSuccessorID;
-            if (currentTokenAgentRingIndex == 0 && startUp) {
-                agentArray.get(currentTokenAgentRingIndex).setRingPredecessor(0);
-                int nextSuccesorIndex = currentTokenAgentRingIndex + 1;
-                agentArray.get(currentTokenAgentRingIndex).setRingSuccessor(nextSuccesorIndex);
-                startUp = false;
-
-            } else if (currentTokenAgentRingIndex == 0) {
-                agentArray.get(currentTokenAgentRingIndex).setRingPredecessor(agentArray.size() - 1);
-                int nextSuccesorIndex = currentTokenAgentRingIndex + 1;
-                agentArray.get(currentTokenAgentRingIndex).setRingSuccessor(nextSuccesorIndex);
-            } else if (currentTokenAgentRingIndex == (agentArray.size() - 1)) {
-
-                agentArray.get(currentTokenAgentRingIndex).setRingPredecessor(agentArray.size() - 2);
-                agentArray.get(currentTokenAgentRingIndex).setRingSuccessor(0);
-
-            } else {
-                agentArray.get(currentTokenAgentRingIndex).setRingPredecessor((currentTokenAgentRingIndex - 1));
-                agentArray.get(currentTokenAgentRingIndex).setRingSuccessor((currentTokenAgentRingIndex + 1));
+//            if (passToken){
+            if (agentArray.get(i).needToken){
+                if (i >= agentArray.size()-1){ i = 0; }
+//                if (agentArray.get(i).needToken){
+                    agentArray.get(i).receiveToken(token);
+                    i++;
+//                }
             }
-
-            agentArray.get(currentTokenAgentRingIndex).sendToken(token, agentArray);
-
-            if (currentTokenAgentRingIndex >= agentArray.size()) {
-                currentTokenAgentRingIndex = 0;
-            }
-            try {
-                Thread.sleep(100); // may need to play around with time
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //maybe sleep somehting here
-
+//            passToken = false;
+//            try {
+//                Thread.sleep(100); // may need to play around with time
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
@@ -72,6 +53,10 @@ public class TokenRing extends Thread {
             index++;
         }
         return -2;
+    }
+
+    public void removeAgent(TokenRingAgent tra){
+        agentArray.remove(tra);
     }
 
     /**

@@ -3,47 +3,50 @@ import java.util.ArrayList;
 /**
  * Created by Sharon on 3/24/2017.
  */
-public class TokenRingAgent {
-    int tokenID =-1;
+public class TokenRingAgent{
+    int tokenID = -1;
     boolean Active = true;
     int processorID;
     int ringPredecessorID;
     int ringSuccessorID;
     ArrayList<TokenRing> tokenRings;
-
+    Processor proc;
+    boolean needToken = false;
 
     /**
      * Default constructor assigns current token ring to local copy and the processor ID of for this token ring
      * @param tokenRings
-     * @param processorID
+     * @param proc
      */
-    TokenRingAgent(ArrayList<TokenRing> tokenRings,int processorID ){
+    TokenRingAgent(ArrayList<TokenRing> tokenRings, Processor proc){
         this.tokenRings = tokenRings;
-        this.processorID = processorID;
+        this.processorID = proc.processID;
+        this.proc = proc;
+    }
+
+    public void remove(){
+        tokenRings.get(0).removeAgent(this);
+    }
+
+    public void requestToken(){
+        needToken = true;
     }
 
     /**
      * This method returns the unique identifier for the token
      * received from the predecessor.
-     * @return the ID for the token received.
      * */
-    public int receiveToken(int TokenID){
-//        tokenRings.get(0).agentArray.(tokenID);
-
-        this.tokenID = TokenID;
-
-        return tokenID;
+    public void receiveToken(Token t){
+//        tokenRings.get(0).passToken = false;
+        this.tokenID = t.tokenID;
     }
 
     /**
      * This method sends the token to the successor.
-     * @param t is the Token to send.
      * */
-    public void sendToken(Token t, ArrayList<TokenRingAgent> AgentList){
-//        System.out.println("TokenAgent "+this.tokenID+" has Successor "+ this.ringSuccessorID);
-        AgentList.get(ringSuccessorID).receiveToken(t.tokenID);
+    public void sendToken(){
         tokenID = -1;
-
+//        tokenRings.get(0).passToken = true;
     }
 
     /**

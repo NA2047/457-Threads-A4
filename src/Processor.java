@@ -11,7 +11,8 @@ public class Processor extends Thread {
     TokenRingAgent tra;
     int processID;
     static int test = 0;
-    int N ;
+    int N;
+    boolean needToken = false;
 
     /**
      * The constructor of Processor.
@@ -22,8 +23,8 @@ public class Processor extends Thread {
      */
     public Processor(int processID, BroadcastSystem broadcastSystem, ArrayList<TokenRing> tokenRings, int numberOfProcessors) {
         this.processID = processID; // process number
-        tra = new TokenRingAgent(tokenRings,this.processID);
-        dsm = new DSM(broadcastSystem, numberOfProcessors,tra);
+        tra = new TokenRingAgent(tokenRings,this);
+        dsm = new DSM(broadcastSystem,this, tra);
         this.N = numberOfProcessors;
     }
 
@@ -41,16 +42,13 @@ public class Processor extends Thread {
      */
     public void petersonsN() {
         // <Entry Section>
-        for (int k = 0; k < N - 2; k++) {
-            try {
+        for (int k = 0; k < N - 1; k++) {
+                System.out.println("went into loop to store flag and turn");
                 // processor that is competing at level k
                 dsm.store("flag" + processID, k);
                 // tells the current level that it's ProcessorIDs turn
                 dsm.store("turn" + k, processID);
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//                Thread.sleep(100);
 
             //the while loop from peterson's algorithm
             while ((ThereExists(k)) && (dsm.load("turn" + k) == processID)) ;
@@ -72,11 +70,11 @@ public class Processor extends Thread {
         // END <Critical Section>
 
         // <Exit Section>
-        try {
+//        try {
             dsm.store("flag" + processID, -1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         // END <Exit Section>
     }
 

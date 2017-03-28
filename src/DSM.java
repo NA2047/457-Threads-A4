@@ -6,14 +6,16 @@ public class DSM {
     LocalMemory localMemory;
     BroadcastAgent broadcastAgent;
     TokenRingAgent tokenRingAgent;
+    Processor proc;
 
     /**
      * The constructor of DSM.
      * LocalMemory and BroadcastAgent are instantiated.
      * @param broadcastSystem is the global instance.
      */
-    public DSM(BroadcastSystem broadcastSystem, int numberOfProcessors,TokenRingAgent tokenRingAgent) {
-        localMemory = new LocalMemory(numberOfProcessors);
+    public DSM(BroadcastSystem broadcastSystem, Processor proc, TokenRingAgent tokenRingAgent) {
+        this.proc = proc;
+        localMemory = new LocalMemory(proc.N);
         broadcastAgent = new BroadcastAgent(broadcastSystem, this);
         this.tokenRingAgent = tokenRingAgent;
     }
@@ -34,14 +36,24 @@ public class DSM {
      * @param v The value to store.
      * @throws InterruptedException
      */
-    public void store(String x, int v) throws InterruptedException {
-        while ((tokenRingAgent.tokenID == -1) && (tokenRingAgent.getActive())){
+    public void store(String x, int v) /*throws InterruptedException*/ {
+        if (tokenRingAgent.getActive()){
+            if (v == -1){
+                tokenRingAgent.remove();
+            }
+            while ((tokenRingAgent.tokenID == -1)){
+                tokenRingAgent.requestToken();
 //            may want to sleep
+            }
         }
 
         // write v into x in local memory
         localMemory.store(x, v);
         // broadcast a message to all other DSMs to apply the write locally in their replicas
         broadcastAgent.broadcast(x, v);
+
+        if (tokenRingAgent.getActive()){
+            tokenRingAgent.sendToken();
+        }
     }
 }
