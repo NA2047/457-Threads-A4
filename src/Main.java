@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -23,31 +21,28 @@ public class Main {
         System.out.println("number of processors? default is 10");
         System.out.print("> ");
         String procNum = in.nextLine();
-        if (!procNum.equals("")){
+        if (!procNum.equals("")) {
             numberOfProcessors = Integer.parseInt(procNum);
         }
         System.out.println("enable token ring? default is true, f to disable");
         System.out.print("> ");
-        if (in.nextLine().equals("f")){
+        if (in.nextLine().equals("f")) {
             enableTokenRing = false;
             multipleTR = false;
-        }
-        else{
+        } else {
             System.out.println("multiple token rings? default is true, f to disable");
             System.out.print("> ");
-            if (in.nextLine().equals("f")){
+            if (in.nextLine().equals("f")) {
                 multipleTR = false;
             }
         }
 
         String type;
-        if (!enableTokenRing){
+        if (!enableTokenRing) {
             type = "Peterson's";
-        }
-        else if (!multipleTR){
+        } else if (!multipleTR) {
             type = "Single TR";
-        }
-        else {
+        } else {
             type = "Multi TR";
         }
 
@@ -56,18 +51,16 @@ public class Main {
         System.out.println("|   numberOfProcessors: " + numberOfProcessors + "   enableTokenRing: " + enableTokenRing + "   multipleTR: " + multipleTR + "\n");
 
         ArrayList<Processor> processors = new ArrayList<>();
-        ArrayList<BroadcastAgent> broadcastAgents = new ArrayList<>();
         ConcurrentLinkedQueue<TokenRing> tokenRings = new ConcurrentLinkedQueue<>();
         ConcurrentLinkedQueue<TokenRingAgent> tokenRingAgents = new ConcurrentLinkedQueue<>();
-//        BlockingQueue<TokenRingAgent> agentArray = new ArrayBlockingQueue<TokenRingAgent>(numberOfProcessors);;
 
-        if (multipleTR){
-            numberOfTokenRings = numberOfProcessors-1;
+        if (multipleTR) {
+            numberOfTokenRings = numberOfProcessors - 1;
         }
 
         /**
          * create token rings
-          */
+         */
         for (int i = 0; i < numberOfTokenRings; i++) {
             TokenRing tr = new TokenRing(i);
             tokenRings.add(tr);
@@ -76,15 +69,11 @@ public class Main {
         /**
          *   create all of the processors
          */
-
         for (int i = 0; i < numberOfProcessors; i++) {
             processors.add(new Processor(i, broadcastSystem, tokenRings, numberOfProcessors, multipleTR));
-//            broadcastAgents.add(processors.get(i).dsm.broadcastAgent);
             tokenRingAgents.add(processors.get(i).tra);
-//            agentArray.pu
         }
 
-        //
         /**
          * set all of the agents in the broadcast system
          * broadcastSystem.setAgents(broadcastAgents);
@@ -92,7 +81,6 @@ public class Main {
         if (enableTokenRing) {
             // set tokenRingAgents and start the token ring(s)
             for (TokenRing tr : tokenRings) {
-//                tr.setAgents(tokenRingAgents);
                 tr.start();
             }
         } else {
@@ -102,11 +90,10 @@ public class Main {
             }
         }
 
-
         // start each thread
         for (Processor p : processors) {
             for (TokenRing tr : tokenRings) {
-                if (tr.flag == false){
+                if (tr.flag == false) {
                     tr.flag = true;
                 }
             }

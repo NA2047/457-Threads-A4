@@ -1,9 +1,5 @@
-import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-/**
- * Created by Sharon on 3/24/2017.
- */
 public class TokenRingAgent {
     int tokenID = -1;
     boolean Active = true;
@@ -11,7 +7,6 @@ public class TokenRingAgent {
     int ringPredecessorID;
     int ringSuccessorID;
     ConcurrentLinkedQueue<TokenRing> tokenRings;
-
     Processor proc;
     boolean needToken = false;
 
@@ -27,7 +22,7 @@ public class TokenRingAgent {
         this.proc = proc;
 
         // for all token rings, add this token ring agent
-        for (TokenRing tr: tokenRings){
+        for (TokenRing tr : tokenRings) {
             tr.addAgent(this);
         }
     }
@@ -44,11 +39,9 @@ public class TokenRingAgent {
      * received from the predecessor.
      */
     public void receiveToken(Token t) {
-        if (proc.multipleTR){
+        if (proc.multipleTR) {
             proc.dsm.tokens.add(t);
-        }
-        else{
-            //        tokenRings.get(0).passToken = false;
+        } else {
             tokenID = t.tokenID;
             proc.dsm.tokenValue = t.tokenID;
         }
@@ -58,10 +51,9 @@ public class TokenRingAgent {
      * This method sends the token to the successor.
      */
     public void sendToken(Token t) {
-        if (proc.multipleTR){
+        if (proc.multipleTR) {
             proc.dsm.tokens.remove(t);
-        }
-        else {
+        } else {
             tokenID = -1;
             proc.dsm.tokenValue = -1;
         }
@@ -73,9 +65,7 @@ public class TokenRingAgent {
      * @param ringPredecessorID sets the ring successor to this value
      */
     public void setRingPredecessor(int ringPredecessorID) {
-//        System.out.println("Setting Ring Predecessor for "+this.processorID+ " from "+ this.ringPredecessorID );
         this.ringPredecessorID = ringPredecessorID;
-//        System.out.print(" to "+ringPredecessorID);
     }
 
     /**
@@ -84,10 +74,7 @@ public class TokenRingAgent {
      * @param ringSuccessorID sets the ring successor to this value
      */
     public void setRingSuccessor(int ringSuccessorID) {
-//        System.out.println("Setting Ring Successor for "+this.processorID+ " from "+ this.ringSuccessorID);
         this.ringSuccessorID = ringSuccessorID;
-//        System.out.println(" to "+ ringPredecessorID);
-
     }
 
     /**
@@ -112,17 +99,15 @@ public class TokenRingAgent {
      * @param t token to be set
      */
     public void setTokenID(Token t) {
-//        System.out.println("setting Token for "+ this.processorID);
         this.tokenID = t.tokenID;
     }
 
     /**
-     * getter for avtive variable
+     * getter for active variable
      *
      * @return return the current value of Active
      */
     public Boolean getActive() {
-//        System.out.println("checking active");
         return Active;
     }
 

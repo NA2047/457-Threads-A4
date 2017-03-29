@@ -10,7 +10,7 @@ public class LocalMemory {
 
     /**
      * The constructor for LocalMemory.
-     *
+     * <p>
      * The flag values are initialized to -1
      * and the turn values are initialized to 0.
      */
@@ -33,7 +33,6 @@ public class LocalMemory {
         if (memory.containsKey(x)) {
             return memory.get(x);
         } else {
-//            System.out.println("cannot find " + x + " ");
             return -5;
         }
     }
@@ -48,4 +47,3 @@ public class LocalMemory {
         memory.put(x, v);
     }
 }
-

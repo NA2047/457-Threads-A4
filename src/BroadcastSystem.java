@@ -1,7 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -14,42 +11,17 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class BroadcastSystem extends Thread {
     private ArrayList<BroadcastAgent> agentArray;
     private ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<>();
-    public BlockingQueue<Message> blockingQueue;
-//    private HashMap<String,Integer> Memory;
     boolean broadcast;
     String x;
     int v;
     int time = 300;
 
-
     /**
-     *Defualt constructor initialize agentArray and BlockingQ
+     * Default constructor initialize agentArray
      */
-    BroadcastSystem(){
+    BroadcastSystem() {
         agentArray = new ArrayList<>();
-        blockingQueue = new ArrayBlockingQueue<Message>(5);
-
     }
-
-
-//    public void run(){
-//        while (true){
-//            if(!blockingQueue.isEmpty()){
-//                Message temp = blockingQueue.remove();
-////                System.out.println(blockingQueue.size());
-//                for(BroadcastAgent broadcastAgent: agentArray){
-//                    broadcastAgent.receive(temp.x,temp.v);
-//                }
-//            }
-//            try{
-//                Thread.sleep(5);
-//            }
-//            catch (InterruptedException e){
-//                e.printStackTrace();
-//            }
-//        }
-//
-//    }
 
     /**
      * The overridden run method.
@@ -61,8 +33,8 @@ public class BroadcastSystem extends Thread {
         while (!interrupted()) {
             if (broadcast) {
                 delay();
-                messages.add(new Message(x,v));
-                while (!messages.isEmpty()){
+                messages.add(new Message(x, v));
+                while (!messages.isEmpty()) {
                     broadcast(messages.peek());
                     messages.poll();
                     delay();
@@ -75,6 +47,7 @@ public class BroadcastSystem extends Thread {
     /**
      * This method broadcasts the message to
      * store to each broadcastAgent.
+     *
      * @param msg The message to broadcast.
      */
     public void broadcast(Message msg) {
@@ -95,27 +68,14 @@ public class BroadcastSystem extends Thread {
         }
     }
 
-//    /**
-//     * This method sets the local array of broadcastAgents.
-//     * @param agentArray The array of all broadcastAgents.
-//     */
-//    public void setAgents(ArrayList<BroadcastAgent> agentArray) {
-//        this.agentArray = agentArray;
-//    }
-
     /**
      * add agents to BoroadCastAgent array upon creation of the processor
+     *
      * @param broadcastAgent Agent created from processor
      */
-    public void addAgents(BroadcastAgent broadcastAgent){
+    public void addAgents(BroadcastAgent broadcastAgent) {
         agentArray.add(broadcastAgent);
     }
-
-//    public BlockingQueue<Message> getBlockingQueue(){
-//        return blockingQueue;
-//    }
-
-
 }
 
 
