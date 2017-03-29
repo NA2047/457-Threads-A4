@@ -17,7 +17,7 @@ public class TokenRing extends Thread {
     int tokenRingID;
     Token token;
     int i = 0;
-    boolean flag;
+    boolean flag = true;
 
     /**
      * constructor for token ring, set instance variables
@@ -36,6 +36,11 @@ public class TokenRing extends Thread {
      */
     @Override
     public void run() {
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // give the token to the first proc (i)
         // once the proc stores, give up the token
         // give the token to the next proc (i++)
@@ -100,7 +105,7 @@ public class TokenRing extends Thread {
      * add each agent upon creation to agentArray
      * @param tokenRingAgent agent of Processor thread
      */
-    public void addItems(TokenRingAgent tokenRingAgent){
+    public void addAgent(TokenRingAgent tokenRingAgent){
         agentArray.add(tokenRingAgent);
     }
 
@@ -111,11 +116,11 @@ public class TokenRing extends Thread {
     public void removeAgent(TokenRingAgent tra) {
         if (agentArray.contains(tra)){
             agentArray.remove(tra);
-            System.out.println("after removing, TRA array in order:");
-            for (TokenRingAgent t : agentArray){
-                System.out.print("  " + t.processorID + "  ");
-            }
-            System.out.println("");
+//            System.out.println("after removing, TRA array in order:");
+//            for (TokenRingAgent t : agentArray){
+//                System.out.print("  " + t.processorID + "  ");
+//            }
+//            System.out.println("");
         }
     }
 

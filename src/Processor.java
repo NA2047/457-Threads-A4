@@ -13,6 +13,7 @@ public class Processor extends Thread {
     int processID;
     static int test = 0;
     int N;
+    boolean multipleTR;
 
     /**
      * The constructor of Processor.
@@ -21,11 +22,12 @@ public class Processor extends Thread {
      * @param processID       is the assigned processID.
      * @param broadcastSystem is the global instance.
      */
-    public Processor(int processID, BroadcastSystem broadcastSystem, ConcurrentLinkedQueue<TokenRing> tokenRings, int numberOfProcessors) {
+    public Processor(int processID, BroadcastSystem broadcastSystem, ConcurrentLinkedQueue<TokenRing> tokenRings, int numberOfProcessors, boolean multipleTR) {
         this.processID = processID; // process number
         tra = new TokenRingAgent(tokenRings, this);
         dsm = new DSM(broadcastSystem, this, tra);
         this.N = numberOfProcessors;
+        this.multipleTR = multipleTR;
     }
 
     /**
@@ -39,7 +41,7 @@ public class Processor extends Thread {
     }
 
     /**
-     * This is peterson's algo
+     * This method represents Peterson's algorithm.
      */
     public void petersonsN() {
         // <Entry Section>
@@ -63,12 +65,12 @@ public class Processor extends Thread {
 //            System.out.println(processID + " went into loop to store flag and turn --- iteration: " + k);
             // processor that is competing at level k
 
-                dsm.store("flag" + processID, k);
+            dsm.store("flag" + processID, k);
 //            System.out.println("     " + processID + " stored flag");
             // tells the current level that it's ProcessorIDs turn
-                dsm.store("turn" + k, processID);
+            dsm.store("turn" + k, processID);
 
-//            System.out.println("     " + processID + " stored turn");
+//            System.out.println("     " + processID + " stored turn " + k);
 //                Thread.sleep(100);
 
             //the while loop from peterson's algorithm
@@ -79,19 +81,20 @@ public class Processor extends Thread {
         // END <Entry Section>
 
         // <Critical Section>
-        System.out.println("   ***Process " + processID + " is in the CS***");
+//        System.out.println("   ***Process " + processID + " is in the CS***");
 //        System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
 
         try {
-
-            Thread.sleep(100); // short delay to demonstrate that the algorithm is not perfect
+            Thread.sleep(50); // short delay to demonstrate that the algorithm is not perfect
 
         } catch (InterruptedException e1) {
             e1.printStackTrace();
         }
+
         System.out.println("   Increment test value by processor " + processID + "  =  " + (++test));
 
-        System.out.println("Process " + processID + " is leaving the CS");
+
+//        System.out.println("Process " + processID + " is leaving the CS");
         // END <Critical Section>
 
         // <Exit Section>
